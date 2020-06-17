@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    Personal Page
+  </div>
 </template>
 
 <script>

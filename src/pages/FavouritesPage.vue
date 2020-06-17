@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    Favourites Page
+  </div>
 </template>
 
 <script>

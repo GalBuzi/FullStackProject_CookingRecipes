@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    Family Page
+  </div>
 </template>
 
 <script>
