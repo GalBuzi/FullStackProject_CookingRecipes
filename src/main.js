@@ -2,7 +2,6 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
 import routes from "./routes";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
@@ -39,6 +38,9 @@ import {
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
+import Bootstrap from "bootstrap-vue";
+Vue.use(Bootstrap);
+
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
@@ -67,6 +69,7 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 const shared_data = {
+  server: "https://assignment3-2-gal.herokuapp.com",
   username: localStorage.username,
   login(username) {
     localStorage.setItem("username", username);

@@ -1,11 +1,11 @@
-import Main from "./pages/MainPage";
+import Home from "./pages/HomePage";
 import NotFound from "./pages/NotFoundPage";
 
 const routes = [
   {
     path: "/",
-    name: "main",
-    component: Main,
+    name: "home",
+    component: Home,
   },
   {
     path: "/register",
@@ -23,7 +23,31 @@ const routes = [
     component: () => import("./pages/SearchPage"),
   },
   {
-    path: "/recipe/:recipeId",
+    path: "/about",
+    name: "about",
+    // component: About,
+    component: () => import("./pages/AboutPage"),
+  },
+  {
+    path: "/myFavourites",
+    name: "myFavourites",
+    // component: Favourites,
+    component: () => import("./pages/FavouritesPage"),
+  },
+  {
+    path: "/myPersonal",
+    name: "myPersonal",
+    // component: Personal,
+    component: () => import("./pages/PersonalPage"),
+  },
+  {
+    path: "/myFamily",
+    name: "myFamily",
+    // component: Family,
+    component: () => import("./pages/FamilyPage"),
+  },
+  {
+    path: "/recipes/getRecipe/id/:recipeId",
     name: "recipe",
     component: () => import("./pages/RecipeViewPage"),
   },
