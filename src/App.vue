@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Navbar v-on:Logout="Logout()"></Navbar>
-
     <router-view />
   </div>
 </template>

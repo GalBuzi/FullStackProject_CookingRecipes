@@ -1,33 +1,34 @@
 <template>
   <div class="container">
-    <h1 class="title">Main Page</h1>
-    <RecipePreviewList title="Random Recipes" class="RandomRecipes center" />
-    <router-link v-if="!$root.store.username" to="/login" tag="button"
-      >You need to Login to vue this</router-link
-    >
-    {{ !$root.store.username }}
-    <RecipePreviewList
-      title="Last Viewed Recipes"
-      :class="{
-        RandomRecipes: true,
-        blur: !$root.store.username,
-        center: true,
-      }"
-      disabled
-    ></RecipePreviewList>
-    <!-- <div
-      style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
-    >
-      Centeredasdasdad
-    </div>-->
+    <b-row>
+      <b-col>
+        <h1 class="title text-center">Home Page</h1>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <RandomRecipesPreviewList />
+      </b-col>
+      <b-col v-if="!$root.store.username">
+        <Login />
+      </b-col>
+      <b-col v-else-if="$root.store.username">
+        <LastThreeViewedRecipesPreviewList />
+      </b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
+// import RecipePreviewList from "../components/RecipePreviewList";
+import Login from "./LoginPage";
+import RandomRecipesPreviewList from "../components/RandomRecipePreviewList";
+import LastThreeViewedRecipesPreviewList from "../components/LastViewedRecipePreviewList";
 export default {
   components: {
-    RecipePreviewList,
+    Login,
+    RandomRecipesPreviewList,
+    LastThreeViewedRecipesPreviewList,
   },
 };
 </script>
