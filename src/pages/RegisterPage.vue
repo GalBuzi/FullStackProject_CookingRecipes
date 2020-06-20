@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="title">Register</h1>
-    <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
+    <b-form @submit.prevent="onRegister()" @reset.prevent="onReset()">
       <b-form-group
         id="input-group-username"
         label-cols-sm="3"
@@ -20,9 +20,17 @@
         <b-form-invalid-feedback v-else-if="!$v.form.username.length">
           Username length should be between 3-8 characters long
         </b-form-invalid-feedback>
-        <b-form-invalid-feedback v-if="!$v.form.username.alpha">
+        <b-form-invalid-feedback v-else-if="!$v.form.username.alpha">
           Username should be letters only
         </b-form-invalid-feedback>
+        <!-- <b-alert
+          v-model="showDismissibleAlert"
+          v-if="!$v.form.username.isTaken"
+          variant="warning"
+          dismissible
+        >
+          Username taken by another user, try another.
+        </b-alert> -->
       </b-form-group>
 
       <b-form-group
@@ -42,6 +50,26 @@
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-else-if="!$v.form.firstName.alpha">
           First Name should be letters only
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-lastName"
+        label-cols-sm="3"
+        label="Last Name:"
+        label-for="lastName"
+      >
+        <b-form-input
+          id="lastName"
+          v-model="$v.form.lastName.$model"
+          type="text"
+          :state="validateState('lastName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.required">
+          Last Name is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-else-if="!$v.form.lastName.alpha">
+          Last Name should be letters only
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -77,14 +105,16 @@
         <b-form-invalid-feedback v-if="!$v.form.password.required">
           Password is required
         </b-form-invalid-feedback>
-        <b-form-text v-else-if="$v.form.password.$error" text-variant="info">
+        <!-- <b-form-text v-else-if="$v.form.password.$error" text-variant="info">
           Your password should be <strong>strong</strong>. <br />
           For that, your password should be also:
-        </b-form-text>
-        <b-form-invalid-feedback
-          v-if="$v.form.password.required && !$v.form.password.length"
-        >
-          Have length between 5-10 characters long
+        </b-form-text> -->
+        <b-form-invalid-feedback v-else-if="!$v.form.password.length">
+          Your password should be between 5-10 characters long
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-else-if="!$v.form.password.valid">
+          Your password should contain letters, one number at least and one
+          special character at least
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -108,6 +138,40 @@
         >
           The confirmed password is not equal to the original password
         </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-email"
+        label-cols-sm="3"
+        label="Email:"
+        label-for="email"
+      >
+        <b-form-input
+          id="email"
+          v-model="$v.form.email.$model"
+          type="text"
+          :state="validateState('email')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.email.required">
+          Email is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-else-if="!$v.form.email.email">
+          Enter valid email address
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-picture_url"
+        label-cols-sm="3"
+        label="Picture URL:"
+        label-for="picture_url"
+      >
+        <b-form-input
+          id="picture_url"
+          v-model="$v.form.picture_url.$model"
+          type="text"
+          :state="validateState('picture_url')"
+        ></b-form-input>
       </b-form-group>
 
       <b-button type="reset" variant="danger">Reset</b-button>
@@ -136,6 +200,16 @@
       <pre class="m-0"><strong>form:</strong> {{ form }}</pre>
       <pre class="m-0"><strong>$v.form:</strong> {{ $v.form }}</pre>
     </b-card> -->
+    <div>
+      <b-modal ref="my-modal" hide-footer title="Error Occured">
+        <div class="d-block text-center">
+          <h3>Username taken by another user, try again.</h3>
+        </div>
+        <b-button class="mt-3" variant="outline-danger" block @click="hideModal"
+          >Close</b-button
+        >
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -150,6 +224,16 @@ import {
   email,
 } from "vuelidate/lib/validators";
 
+// const isTaken = function() {
+//   return this.showDismissibleAlert;
+// };
+
+// const changeBool = function() {
+//   if (this.showDismissibleAlert == false) {
+//     this.showDismissibleAlert = true;
+//   }
+// };
+
 export default {
   name: "Register",
   data() {
@@ -162,6 +246,7 @@ export default {
         password: "",
         confirmedPassword: "",
         email: "",
+        picture_url: "",
         submitError: undefined,
       },
       countries: [{ value: null, text: "", disabled: true }],
@@ -169,12 +254,14 @@ export default {
       validated: false,
     };
   },
+  computed: {},
   validations: {
     form: {
       username: {
         required,
         length: (u) => minLength(3)(u) && maxLength(8)(u),
         alpha,
+        // isTaken,
       },
       firstName: {
         required,
@@ -190,6 +277,7 @@ export default {
       password: {
         required,
         length: (p) => minLength(5)(p) && maxLength(10)(p),
+        valid: (p) => /[a-z]/.test(p) && /[0-9]/.test(p) && /\W|_/.test(p),
       },
       confirmedPassword: {
         required,
@@ -199,6 +287,7 @@ export default {
         required,
         email,
       },
+      picture_url: {},
     },
   },
   mounted() {
@@ -207,6 +296,12 @@ export default {
     // console.log($v);
   },
   methods: {
+    showModal() {
+      this.$refs["my-modal"].show();
+    },
+    hideModal() {
+      this.$refs["my-modal"].hide();
+    },
     validateState(param) {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
@@ -217,12 +312,22 @@ export default {
           this.$root.store.server + "/register",
           {
             username: this.form.username,
+            firstName: this.form.firstName,
+            lastName: this.form.lastName,
+            country: this.form.country,
             password: this.form.password,
+            email: this.form.email,
+            picture_url: this.form.picture,
           }
         );
-        this.$router.push("/register");
         // console.log(response);
+        this.$router.push({ name: "login" });
       } catch (err) {
+        if (err.response.data.error.message === "Username taken") {
+          console.log("userName Taken!");
+          this.showModal();
+          this.form.username = "";
+        }
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }

@@ -49,7 +49,7 @@
             ></b-navbar-brand
           >
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav class="ml-auto" v-else>
           <b-navbar-brand>Welcome {{ $root.store.username }} !</b-navbar-brand>
           <b-nav-item-dropdown text="User's Information" right>
             <b-dropdown-item>
@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  name: "navBar"
+  name: "navBar",
 };
 </script>
 
