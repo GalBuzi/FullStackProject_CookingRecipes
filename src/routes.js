@@ -45,10 +45,13 @@ const routes = [
     name: "myFamily",
     // component: Family,
     component: () => import("./pages/FamilyPage"),
+    meta: {
+      requiredAuth: true,
+    },
   },
   {
     path: "/recipes/getRecipe/id/:recipeId",
-    name: "recipe",
+    name: "fullRecipeView",
     component: () => import("./pages/RecipeViewPage"),
   },
   {

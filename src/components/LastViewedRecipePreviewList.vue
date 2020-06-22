@@ -22,8 +22,10 @@ export default {
     async updateRecipes() {
       try {
         const response = await this.axios.get(
-          this.$root.store.server + "/users/getLastThreeViewedRecipes",
-          { withCredentials: true }
+          this.$root.store.server + "/users/getLastThreeViewedRecipes"
+          // {
+          //   credentials: true,
+          // }
         );
 
         console.log(response);
@@ -32,7 +34,7 @@ export default {
         this.recipes.push(...recipes);
         // console.log(this.recipes);
       } catch (error) {
-        console.log(error);
+        console.log(error.response);
       }
     },
   },
