@@ -12,6 +12,9 @@ export default {
   components: {
     Navbar,
   },
+  mounted() {
+    console.log(this.$cookies.get("session"));
+  },
   methods: {
     Logout() {
       this.$root.store.logout();

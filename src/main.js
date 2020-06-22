@@ -4,11 +4,8 @@ import VueAxios from "vue-axios";
 import axios from "axios";
 import routes from "./routes";
 import VueRouter from "vue-router";
-Vue.use(VueRouter);
-const router = new VueRouter({
-  routes,
-});
-
+import VueCookies from "vue-cookies";
+import Bootstrap from "bootstrap-vue";
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -36,10 +33,13 @@ import {
   ToastPlugin,
   LayoutPlugin,
 ].forEach((x) => Vue.use(x));
-Vue.use(Vuelidate);
 
-import Bootstrap from "bootstrap-vue";
+Vue.use(VueRouter);
+Vue.use(Vuelidate);
 Vue.use(Bootstrap);
+Vue.use(VueCookies);
+
+axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(
   function(config) {
@@ -68,8 +68,13 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
+const router = new VueRouter({
+  routes,
+});
+
 const shared_data = {
   server: "https://assignment3-2-gal.herokuapp.com",
+  // server: "http://localhost:8008",
   username: localStorage.username,
   login(username) {
     localStorage.setItem("username", username);
@@ -78,10 +83,30 @@ const shared_data = {
   },
   logout() {
     console.log("logout");
+    Vue.$cookies.remove("session");
     localStorage.removeItem("username");
     this.username = undefined;
   },
 };
+
+router.beforeEach((to, from, next) => {
+  // if there was a transition from logged in to session expired or localStorage was deleted
+  // if we try to enter auth required pages and we are not authorized
+  if (shared_data.username === undefined || !Vue.$cookies.get("session")) {
+    if (
+      (shared_data.username === undefined && Vue.$cookies.get("session")) ||
+      (shared_data.username !== undefined && !Vue.$cookies.get("session"))
+    ) {
+      shared_data.logout();
+    }
+
+    // if the route requires Authorization, (and we know the user is not authorized), we redirect to login page
+    if (to.matched.some((route) => route.meta.requiresAuth)) {
+      next({ name: "login" });
+    } else next();
+  } else next();
+});
+
 console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;
 

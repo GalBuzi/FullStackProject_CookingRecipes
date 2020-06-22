@@ -14,18 +14,15 @@
             </div>
             Ingredients:
             <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-              >
-                {{ r.original }}
+              <li v-for="(r, index) in recipe.ingredients" :key="index">
+                {{ r.amount }} {{ r.unit }} of {{ r.ingredient_name }}
               </li>
             </ul>
           </div>
           <div class="wrapped">
             Instructions:
             <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
+              <li v-for="s in recipe.instructions" :key="s.step_number">
                 {{ s.step }}
               </li>
             </ol>
@@ -51,53 +48,28 @@ export default {
   async created() {
     try {
       let response;
-      // response = this.$route.params.response;
 
       try {
         response = await this.axios.get(
-          this.$root.store.server + "/recipes/getRecipe/id/:recipeId",
-          {
-            params: { id: this.$route.params.recipeId },
-          }
+          this.$root.store.server +
+            "/recipes/getRecipe/id/" +
+            this.$route.params.recipeId
+          // {
+          //   params: { id:  },
+          // }
         );
-
-        // console.log("response.status", response.status);
-        if (response.status !== 200) this.$router.replace("/NotFound");
+        console.log("response.status", response.status);
       } catch (error) {
+        console.log("error.response", error.response.status);
         console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
         return;
       }
 
-      let {
-        analyzedInstructions,
-        instructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title,
-      } = response.data.recipe;
-
-      let _instructions = analyzedInstructions
-        .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
-        })
-        .reduce((a, b) => [...a, ...b], []);
-
-      let _recipe = {
-        instructions,
-        _instructions,
-        analyzedInstructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title,
-      };
-
-      this.recipe = _recipe;
+      // debugger;
+      // console.log(response);
+      this.recipe = response.data;
+      // console.log(this.recipe);
     } catch (error) {
       console.log(error);
     }
