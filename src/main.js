@@ -73,8 +73,8 @@ const router = new VueRouter({
 });
 
 const shared_data = {
-  server: "https://assignment3-2-gal.herokuapp.com",
-  // server: "http://localhost:8008",
+  // server: "https://assignment3-2-gal.herokuapp.com",
+  server: "http://localhost:8008",
   username: localStorage.username,
   login(username) {
     localStorage.setItem("username", username);
