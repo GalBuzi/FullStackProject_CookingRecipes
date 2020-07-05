@@ -9,8 +9,42 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
+              <div v-if="isVegan()">
+                Vegan:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Vegan:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
+
+              <div v-if="isVegetarian()">
+                Vegetarian:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Vegetarian:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
+
+              <div v-if="isGlutenFree()">
+                Gluten-Free:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Gluten-Free:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
               <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
+              <div>Servings: {{ recipe.servings }}</div>
               <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <div>
+                <b-button
+                  variant="outline-warning"
+                  @click="addRecipeToFavourites()"
+                  >Add To Favourites</b-button
+                >
+              </div>
             </div>
             Ingredients:
             <ul>
@@ -29,11 +63,6 @@
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
@@ -48,31 +77,66 @@ export default {
   async created() {
     try {
       let response;
+      const recipe_id = this.$route.params.recipeId;
 
-      try {
-        response = await this.axios.get(
-          this.$root.store.server +
-            "/recipes/getRecipe/id/" +
-            this.$route.params.recipeId
-          // {
-          //   params: { id:  },
-          // }
+      response = await this.axios.get(
+        this.$root.store.server + "/recipes/getRecipe/id/" + recipe_id
+        // {
+        //   params: { id:  },
+        // }
+      );
+      this.recipe = response.data;
+
+      // console.log("response.status", response.status);
+      if (this.$root.store.username) {
+        let added = await this.axios.get(
+          this.$root.store.server + "/users/addRecipeToViewed/id/" + recipe_id
         );
-        console.log("response.status", response.status);
-      } catch (error) {
-        console.log("error.response", error.response.status);
-        console.log("error.response.status", error.response.status);
-        this.$router.replace("/NotFound");
-        return;
+        if (added) {
+          if (
+            !this.$root.store.viewed_recipes.find(
+              (x) => x.recipe_id === recipe_id
+            )
+          ) {
+            this.$root.store.viewed_recipes.push({ recipe_id: recipe_id });
+          }
+        }
       }
 
       // debugger;
       // console.log(response);
-      this.recipe = response.data;
       // console.log(this.recipe);
     } catch (error) {
-      console.log(error);
+      console.log("error.response", error.response.status);
+      console.log("error.response.status", error.response.status);
+      this.$router.replace("/NotFound");
     }
+  },
+  methods: {
+    async addRecipeToFavourites() {
+      const recipe_id = this.recipe.id;
+      let added = await this.axios.get(
+        this.$root.store.server + "/users/addRecipeToFavourites/id/" + recipe_id
+      );
+      if (added)
+        if (
+          !this.$root.store.favourites_recipes.find(
+            (x) => x.recipe_id === recipe_id
+          )
+        )
+          this.$root.store.favourites_recipes.push({ recipe_id: recipe_id });
+
+      console.log(this.$root.store.favourites_recipes);
+    },
+    isVegan() {
+      return this.recipe.vegan;
+    },
+    isVegetarian() {
+      return this.recipe.vegetarian;
+    },
+    isGlutenFree() {
+      return this.recipe.glutenFree;
+    },
   },
 };
 </script>
