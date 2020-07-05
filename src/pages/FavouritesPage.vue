@@ -1,11 +1,24 @@
 <template>
-  <div>
-    Favourites Page
+  <div class ="favorite">
+      <FavoriteRecipePreviewList/>
   </div>
 </template>
 
 <script>
-export default {};
+import FavoriteRecipePreviewList from "../components/FavoriteRecipePreviewList";
+export default {
+name: "FavoritePage",
+components:{
+  FavoriteRecipePreviewList,
+}
+};
+
 </script>
 
-<style></style>
+
+<style>
+.favorie {
+  height: 100px;
+  width: 100px;
+}
+</style>

@@ -76,7 +76,7 @@ const router = new VueRouter({
 
 const shared_data = {
   // server: "https://assignment3-2-gal.herokuapp.com",
-  server: "http://localhost:8008",
+  server: "http://localhost:4000",
   username: localStorage.username,
   viewed_recipes: localStorage.viewed_recipes
     ? JSON.parse(localStorage.viewed_recipes)
