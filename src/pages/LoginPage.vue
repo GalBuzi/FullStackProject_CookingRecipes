@@ -110,6 +110,13 @@ export default {
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
+
+        const fav_array = await this.axios.get(
+          this.$root.store.server + "/users/userInfoFavourites"
+        );
+
+        this.$root.store.addFavouritesRecipes(fav_array.data);
+
         this.$router.push("/").catch((err) => {});
       } catch (err) {
         console.log(err.response);

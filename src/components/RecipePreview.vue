@@ -4,7 +4,6 @@
     class="recipe-preview"
   >
     <div class="recipe-body">
-      <!-- v-if="image_load" -->
       <img :src="recipe.image" class="recipe-image" />
     </div>
     <div class="recipe-footer">
@@ -12,8 +11,48 @@
         {{ recipe.title }}
       </div>
       <ul class="recipe-overview">
+        <li v-if="isVegan()">
+          Vegan:
+          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+        </li>
+        <li v-else>
+          Vegan:
+          <b-icon icon="x-square" style="color: #000000;"></b-icon>
+        </li>
+
+        <li v-if="isVegetarian()">
+          Vegetarian:
+          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+        </li>
+        <li v-else>
+          Vegetarian:
+          <b-icon icon="x-square" style="color: #000000;"></b-icon>
+        </li>
+
+        <li v-if="isGlutenFree()">
+          Gluten-Free:
+          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+        </li>
+        <li v-else>
+          Gluten-Free:
+          <b-icon icon="x-square" style="color: #000000;"></b-icon>
+        </li>
         <li>{{ recipe.readyInMinutes }} minutes</li>
         <li>{{ recipe.aggregateLikes }} likes</li>
+        <div v-if="this.$root.store.username">
+          <li v-if="isViewed()">
+            <b-icon icon="eye-fill" style="color: #00ff00;"></b-icon>
+          </li>
+          <li v-else>
+            <b-icon icon="eye-fill" style="color:#867979; "></b-icon>
+          </li>
+          <li v-if="isFavourite()">
+            <b-icon icon="star-fill" style="color: #ffff00;"></b-icon>
+          </li>
+          <li v-else>
+            <b-icon icon="star-fill" style="color: #867979;"></b-icon>
+          </li>
+        </div>
       </ul>
     </div>
   </router-link>
@@ -28,6 +67,25 @@ export default {
     recipe: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    isViewed() {
+      const arr = this.$root.store.viewed_recipes;
+      return arr.find((x) => x.recipe_id == this.recipe.id);
+    },
+    isFavourite() {
+      const arr = this.$root.store.favourites_recipes;
+      return arr.find((x) => x.recipe_id == this.recipe.id);
+    },
+    isVegan() {
+      return this.recipe.vegan;
+    },
+    isVegetarian() {
+      return this.recipe.vegetarian;
+    },
+    isGlutenFree() {
+      return this.recipe.glutenFree;
     },
   },
 };

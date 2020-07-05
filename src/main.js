@@ -20,6 +20,7 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  BootstrapVueIcons,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -32,6 +33,7 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  BootstrapVueIcons,
 ].forEach((x) => Vue.use(x));
 
 Vue.use(VueRouter);
@@ -76,6 +78,16 @@ const shared_data = {
   // server: "https://assignment3-2-gal.herokuapp.com",
   server: "http://localhost:8008",
   username: localStorage.username,
+  viewed_recipes: localStorage.viewed_recipes
+    ? JSON.parse(localStorage.viewed_recipes)
+    : [],
+  favourites_recipes: localStorage.favourites_recipes
+    ? JSON.parse(localStorage.favourites_recipes)
+    : [],
+  search_history: localStorage.search_history
+    ? localStorage.search_history
+    : "",
+
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;
@@ -86,6 +98,21 @@ const shared_data = {
     Vue.$cookies.remove("session");
     localStorage.removeItem("username");
     this.username = undefined;
+  },
+  addViewedRecipes(viewed_recipes) {
+    localStorage.setItem("viewed_recipes", JSON.stringify(viewed_recipes));
+    this.viewed_recipes = viewed_recipes;
+  },
+  addFavouritesRecipes(favourites_recipes) {
+    localStorage.setItem(
+      "favourites_recipes",
+      JSON.stringify(favourites_recipes)
+    );
+    this.favourites_recipes = favourites_recipes;
+  },
+  addSearchedRecipes(search_history) {
+    localStorage.setItem("search_history", search_history);
+    this.search_history = search_history;
   },
 };
 
