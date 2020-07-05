@@ -55,6 +55,16 @@ const routes = [
     component: () => import("./pages/RecipeViewPage"),
   },
   {
+    path: "/users/getPersonalRecipe/id/:recipeId",
+    name: "fullPersonalRecipeView",
+    component: () => import("./pages/RecipePersonalViewPage"),
+  },
+  {
+    path: "/users/getFamilyRecipe/id/:recipeId",
+    name: "fullFamilyRecipeView",
+    component: () => import("./pages/RecipeFamilyViewPage"),
+  },
+  {
     path: "*",
     name: "notFound",
     component: NotFound,

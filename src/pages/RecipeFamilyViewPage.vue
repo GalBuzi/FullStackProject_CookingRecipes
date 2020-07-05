@@ -1,29 +1,39 @@
 <template>
   <div class="container">
-    <div v-if="recipe">
+    <div v-if="familyRecipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <img :src="recipe.image" class="center" />
+        <h1>{{ familyRecipe.title }}</h1>
+        <img :src="familyRecipe.image" class="center" />
       </div>
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <div>Recipe owner: {{ familyRecipe.RecipeOwner }}</div>
+              <div>Ready in {{ familyRecipe.readyInMinutes }} minutes</div>
+              <div>Servings: {{ familyRecipe.servings }}</div>
+              <div>Likes: {{ familyRecipe.aggregateLikes }} likes</div>
+              <div>
+                Occasions:
+                <ul>
+              <li v-for="occation in familyRecipe.Occasion" :key="occation">
+                {{ occation }}
+              </li>
+            </ul>
+              </div>
             </div>
             Ingredients:
             <ul>
-              <li v-for="(r, index) in recipe.ingredients" :key="index">
-                {{ r.amount }} {{ r.unit }} of {{ r.ingredient_name }}
+              <li v-for="(r, index) in familyRecipe.ingredients" :key="index">
+                {{ r.amount }} {{ r.unit }} of {{ r.name }}
               </li>
             </ul>
           </div>
           <div class="wrapped">
             Instructions:
             <ol>
-              <li v-for="s in recipe.instructions" :key="s.step_number">
-                {{ s.step }}
+              <li v-for="s in familyRecipe.instructions" :key="s.step">
+                {{ s.instruction }}
               </li>
             </ol>
           </div>
@@ -42,7 +52,7 @@
 export default {
   data() {
     return {
-      recipe: null,
+      familyRecipe: [],
     };
   },
   async created() {
@@ -52,13 +62,13 @@ export default {
       try {
         response = await this.axios.get(
           this.$root.store.server +
-            "/recipes/getRecipe/id/" +
+            "/users/getFamilyRecipe/id/" +
             this.$route.params.recipeId
           // {
           //   params: { id:  },
           // }
         );
-        console.log("check")
+        console.log("family")
         console.log(response.data);
         console.log("response.status", response.status);
       } catch (error) {
@@ -70,7 +80,9 @@ export default {
 
       // debugger;
       // console.log(response);
-      this.recipe = response.data;
+      console.log(response.data[0]);
+      this.familyRecipe = response.data[0];
+      console.log(familyRecipe)
       // console.log(this.recipe);
     } catch (error) {
       console.log(error);

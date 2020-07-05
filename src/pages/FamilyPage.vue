@@ -1,11 +1,18 @@
 <template>
   <div>
-    Family Page
+    <MyFamilyRecipesList/>
   </div>
 </template>
 
 <script>
-export default {};
+import MyFamilyRecipesList from "../components/MyFamilyRecipesList";
+export default {
+name: "myFamily",
+components:{
+  MyFamilyRecipesList,
+}
+};
+
 </script>
 
 <style></style>

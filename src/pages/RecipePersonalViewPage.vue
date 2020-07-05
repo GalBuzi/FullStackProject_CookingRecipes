@@ -1,29 +1,30 @@
 <template>
   <div class="container">
-    <div v-if="recipe">
+    <div v-if="personalRecipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <img :src="recipe.image" class="center" />
+        <h1>{{ personalRecipe.title }}</h1>
+        <img :src="personalRecipe.image" class="center" />
       </div>
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <div>Ready in {{ personalRecipe.readyInMinutes }} minutes</div>
+              <div>Servings: {{ personalRecipe.servings }}</div>
+              <div>Likes: {{ personalRecipe.aggregateLikes }} likes</div>
             </div>
             Ingredients:
             <ul>
-              <li v-for="(r, index) in recipe.ingredients" :key="index">
-                {{ r.amount }} {{ r.unit }} of {{ r.ingredient_name }}
+              <li v-for="(r, index) in personalRecipe.ingredients" :key="index">
+                {{ r.amount }} {{ r.unit }} of {{ r.name }}
               </li>
             </ul>
           </div>
           <div class="wrapped">
             Instructions:
             <ol>
-              <li v-for="s in recipe.instructions" :key="s.step_number">
-                {{ s.step }}
+              <li v-for="s in personalRecipe.instructions" :key="s.step">
+                {{ s.instruction }}
               </li>
             </ol>
           </div>
@@ -42,7 +43,7 @@
 export default {
   data() {
     return {
-      recipe: null,
+      personalRecipe: [],
     };
   },
   async created() {
@@ -52,13 +53,13 @@ export default {
       try {
         response = await this.axios.get(
           this.$root.store.server +
-            "/recipes/getRecipe/id/" +
+            "/users/getPersonalRecipe/id/" +
             this.$route.params.recipeId
           // {
           //   params: { id:  },
           // }
         );
-        console.log("check")
+        console.log("personal")
         console.log(response.data);
         console.log("response.status", response.status);
       } catch (error) {
@@ -70,7 +71,9 @@ export default {
 
       // debugger;
       // console.log(response);
-      this.recipe = response.data;
+      console.log(response.data[0]);
+      this.personalRecipe = response.data[0];
+      console.log(personalRecipe)
       // console.log(this.recipe);
     } catch (error) {
       console.log(error);

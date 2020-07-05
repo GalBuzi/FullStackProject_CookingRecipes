@@ -3,18 +3,18 @@
     <h3>{{ title }}:</h3>
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
-        <RecipePreview class="recipePreview" :recipe="r" />
+        <RecipePersonalPreview class="recipePreview" :recipe="r" />
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-import RecipePreview from "./RecipePreview.vue";
+import RecipePersonalPreview from "./RecipePersonalPreview.vue";
 export default {
-  name: "RecipePreviewList",
+  name: "RecipePersonalPreviewList",
   components: {
-    RecipePreview,
+    RecipePersonalPreview,
   },
   props: {
     title: {
