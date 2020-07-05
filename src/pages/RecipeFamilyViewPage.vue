@@ -9,6 +9,32 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
+              <div v-if="isVegan()">
+                Vegan:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Vegan:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
+
+              <div v-if="isVegetarian()">
+                Vegetarian:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Vegetarian:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
+
+              <div v-if="isGlutenFree()">
+                Gluten-Free:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Gluten-Free:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
               <div>Recipe owner: {{ familyRecipe.RecipeOwner }}</div>
               <div>Ready in {{ familyRecipe.readyInMinutes }} minutes</div>
               <div>Servings: {{ familyRecipe.servings }}</div>
@@ -16,10 +42,10 @@
               <div>
                 Occasions:
                 <ul>
-              <li v-for="occation in familyRecipe.Occasion" :key="occation">
-                {{ occation }}
-              </li>
-            </ul>
+                  <li v-for="occation in familyRecipe.Occasion" :key="occation">
+                    {{ occation }}
+                  </li>
+                </ul>
               </div>
             </div>
             Ingredients:
@@ -68,7 +94,7 @@ export default {
           //   params: { id:  },
           // }
         );
-        console.log("family")
+        console.log("family");
         console.log(response.data);
         console.log("response.status", response.status);
       } catch (error) {
@@ -82,11 +108,22 @@ export default {
       // console.log(response);
       console.log(response.data[0]);
       this.familyRecipe = response.data[0];
-      console.log(familyRecipe)
+      console.log(familyRecipe);
       // console.log(this.recipe);
     } catch (error) {
       console.log(error);
     }
+  },
+  methods: {
+    isVegan() {
+      return this.familyRecipe.vegan;
+    },
+    isVegetarian() {
+      return this.familyRecipe.vegetarian;
+    },
+    isGlutenFree() {
+      return this.familyRecipe.glutenFree;
+    },
   },
 };
 </script>

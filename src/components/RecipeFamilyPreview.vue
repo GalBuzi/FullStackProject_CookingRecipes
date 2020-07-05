@@ -12,6 +12,32 @@
         {{ recipe.title }}
       </div>
       <ul class="recipe-overview">
+        <li v-if="isVegan()">
+          Vegan:
+          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+        </li>
+        <li v-else>
+          Vegan:
+          <b-icon icon="x-square" style="color: #000000;"></b-icon>
+        </li>
+
+        <li v-if="isVegetarian()">
+          Vegetarian:
+          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+        </li>
+        <li v-else>
+          Vegetarian:
+          <b-icon icon="x-square" style="color: #000000;"></b-icon>
+        </li>
+
+        <li v-if="isGlutenFree()">
+          Gluten-Free:
+          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+        </li>
+        <li v-else>
+          Gluten-Free:
+          <b-icon icon="x-square" style="color: #000000;"></b-icon>
+        </li>
         <li>{{ recipe.readyInMinutes }} minutes</li>
         <li>{{ recipe.aggregateLikes }} likes</li>
       </ul>
@@ -28,6 +54,17 @@ export default {
     recipe: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    isVegan() {
+      return this.recipe.vegan;
+    },
+    isVegetarian() {
+      return this.recipe.vegetarian;
+    },
+    isGlutenFree() {
+      return this.recipe.glutenFree;
     },
   },
 };

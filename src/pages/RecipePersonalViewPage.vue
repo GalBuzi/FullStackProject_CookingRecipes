@@ -9,6 +9,32 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
+              <div v-if="isVegan()">
+                Vegan:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Vegan:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
+
+              <div v-if="isVegetarian()">
+                Vegetarian:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Vegetarian:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
+
+              <div v-if="isGlutenFree()">
+                Gluten-Free:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </div>
+              <div v-else>
+                Gluten-Free:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </div>
               <div>Ready in {{ personalRecipe.readyInMinutes }} minutes</div>
               <div>Servings: {{ personalRecipe.servings }}</div>
               <div>Likes: {{ personalRecipe.aggregateLikes }} likes</div>
@@ -59,7 +85,7 @@ export default {
           //   params: { id:  },
           // }
         );
-        console.log("personal")
+        console.log("personal");
         console.log(response.data);
         console.log("response.status", response.status);
       } catch (error) {
@@ -73,11 +99,22 @@ export default {
       // console.log(response);
       console.log(response.data[0]);
       this.personalRecipe = response.data[0];
-      console.log(personalRecipe)
+      console.log(personalRecipe);
       // console.log(this.recipe);
     } catch (error) {
       console.log(error);
     }
+  },
+  methods: {
+    isVegan() {
+      return this.personalRecipe.vegan;
+    },
+    isVegetarian() {
+      return this.personalRecipe.vegetarian;
+    },
+    isGlutenFree() {
+      return this.personalRecipe.glutenFree;
+    },
   },
 };
 </script>
