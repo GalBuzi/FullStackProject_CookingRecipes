@@ -2,7 +2,7 @@
   <div class="container">
     <b-row>
       <b-col>
-        <h1 class="title text-center">Home Page</h1>
+        <h1 class="title text-center">Welcome</h1>
       </b-col>
     </b-row>
     <b-row>
@@ -16,6 +16,8 @@
         <LastThreeViewedRecipesPreviewList />
       </b-col>
     </b-row>
+    <br />
+    <br />
   </div>
 </template>
 
@@ -55,10 +57,11 @@ export default {
   pointer-events: none;
   cursor: default;
 }
-.title{
-  font-size:2.4cm;
+.title {
+  font-size: 56pt;
   font-weight: bold;
   -webkit-text-stroke: 2px black; /* width and color */
-  font-family: sans; color:whitesmoke;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: whitesmoke;
 }
 </style>

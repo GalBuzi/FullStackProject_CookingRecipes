@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title" style="color:white">Search Page</h1>
+    <h1 class="title">Search Page</h1>
     <div>
       <b-row class="rows">
         <b-col class="cols">
@@ -18,7 +18,7 @@
       </b-row>
       <b-row class="rows">
         <b-col class="cols">
-          <h4 style="color:white">Choose Cuisine:</h4>
+          <h4 class="h4">Cuisine:</h4>
           <b-form-select
             v-model="cuisine_type"
             :options="cuisines_types"
@@ -26,7 +26,7 @@
           ></b-form-select>
         </b-col>
         <b-col class="cols">
-          <h4 style="color:white">Choose Diet:</h4>
+          <h4 class="h4">Diet:</h4>
           <b-form-select
             v-model="diet"
             :options="all_diets"
@@ -34,7 +34,7 @@
           ></b-form-select>
         </b-col>
         <b-col class="cols">
-          <h4 style="color:white">Choose Intolerance:</h4>
+          <h4 class="h4">Intolerance:</h4>
           <b-form-select
             v-model="intolerance"
             :options="all_intolerances"
@@ -45,14 +45,19 @@
       <br />
       <b-row>
         <b-col class="cols">
-          <b-button variant="outline-warning" @click="search()"
-            >Search</b-button
-          >
-        </b-col>
-        <b-col class="cols">
-          <div style="color:white; font-size:0.6cm;" v-if="$root.store.username">
-            Your last search was: {{ lastSearch }} 
+          <div class="buttonStyle">
+            <b-button
+              class="button"
+              block
+              pill
+              variant="light"
+              @click="search()"
+              >Search</b-button
+            >
           </div>
+        </b-col>
+        <b-col class="lastSearch">
+          <div v-if="$root.store.username">Last Search: {{ lastSearch }}</div>
         </b-col>
       </b-row>
       <b-row v-if="this.recipes.length > 0">
@@ -73,7 +78,11 @@
       </b-row>
     </div>
     <div v-if="this.recipes.length > 0">
-      <RecipePreviewList style="color:white" title="Results" :recipes="recipes"></RecipePreviewList>
+      <RecipePreviewList
+        style="color:white"
+        title="Results"
+        :recipes="recipes"
+      ></RecipePreviewList>
     </div>
     <div>
       <b-modal ref="my-modal" hide-footer title="No Recipes Found">
@@ -198,4 +207,41 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.buttonStyle {
+  width: 50%;
+  padding-left: 10%;
+}
+
+.button {
+  color: black;
+  font-size: x-large;
+}
+
+.title {
+  font-weight: bold;
+  -webkit-text-stroke: 2px black; /* width and color */
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: whitesmoke;
+  font-size: 48pt;
+  text-align: center;
+}
+
+.h4 {
+  font-weight: bold;
+  -webkit-text-stroke: 1.5px black; /* width and color */
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: whitesmoke;
+  font-size: 28pt;
+  text-align: center;
+}
+
+.lastSearch {
+  font-weight: bold;
+  -webkit-text-stroke: 1px black; /* width and color */
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 20pt;
+  text-align: center;
+}
+</style>

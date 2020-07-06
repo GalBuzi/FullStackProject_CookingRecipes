@@ -1,15 +1,27 @@
 <template>
   <div>
-    <div>
-      <RecipePreviewList title="Random Recipes" style="color:whitesmoke;font-family: sans;" :recipes="recipes" />
-    </div>
+    <b-row>
+      <div>
+        <RecipePreviewList
+          title="Random Recipes"
+          style="color:whitesmoke;font-family: sans;"
+          :recipes="recipes"
+        />
+      </div>
+    </b-row>
     <br />
-    <br />
-    <div>
-      <b-button variant="outline-primary" @click="updateRecipes()"
-        >More Recipes</b-button
-      >
-    </div>
+    <b-row>
+      <div class="buttonStyle">
+        <b-button
+          class="button"
+          block
+          pill
+          variant="light"
+          @click="updateRecipes()"
+          >More Recipes</b-button
+        >
+      </div>
+    </b-row>
   </div>
 </template>
 
@@ -75,5 +87,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.buttonStyle {
+  width: 90%;
+  padding-left: 10%;
+}
+
+.button {
+  color: black;
+  font-size: x-large;
+}
 </style>

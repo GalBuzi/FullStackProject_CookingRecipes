@@ -1,48 +1,80 @@
 <template>
-  <router-link
-    :to="{ name: 'fullFamilyRecipeView', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
-    <div class="recipe-body">
-      <!-- v-if="image_load" -->
-      <img :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
+  <!-- fullFamilyRecipeView -->
+  <div>
+    <router-link
+      :to="{ name: 'fullFamilyRecipeView', params: { recipeId: recipe.id } }"
+      class="recipe-preview"
+    >
+      <div class="recipe-body">
+        <img :src="recipe.image" class="recipe-image" />
+      </div>
+      <div
+        :title="recipe.title"
+        class="recipe-title"
+        style="font-size: 14pt;
+      padding: 5px 5px;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  font-family:'Comic Sans MS', cursive, sans-serif;
+  color: blue;"
+      >
         {{ recipe.title }}
       </div>
-      <ul class="recipe-overview">
-        <li v-if="isVegan()">
-          Vegan:
-          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
-        </li>
-        <li v-else>
-          Vegan:
-          <b-icon icon="x-square" style="color: #000000;"></b-icon>
-        </li>
+    </router-link>
+    <div class="recipe-preview">
+      <div class="recipe-footer">
+        <ul class="recipe-overview">
+          <b-row>
+            <b-col>
+              <li v-if="isVegan()">
+                Vegan:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </li>
+              <li v-else>
+                Vegan:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </li>
+            </b-col>
+            <b-col>
+              <li v-if="isVegetarian()">
+                Vegetarian:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </li>
+              <li v-else>
+                Vegetarian:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </li>
+            </b-col>
 
-        <li v-if="isVegetarian()">
-          Vegetarian:
-          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
-        </li>
-        <li v-else>
-          Vegetarian:
-          <b-icon icon="x-square" style="color: #000000;"></b-icon>
-        </li>
-
-        <li v-if="isGlutenFree()">
-          Gluten-Free:
-          <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
-        </li>
-        <li v-else>
-          Gluten-Free:
-          <b-icon icon="x-square" style="color: #000000;"></b-icon>
-        </li>
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
+            <b-col>
+              <li v-if="isGlutenFree()">
+                Gluten-Free:
+                <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
+              </li>
+              <li v-else>
+                Gluten-Free:
+                <b-icon icon="x-square" style="color: #000000;"></b-icon>
+              </li>
+            </b-col>
+          </b-row>
+        </ul>
+        <ul class="recipe-overview">
+          <b-row>
+            <b-col>
+              <li>{{ recipe.readyInMinutes }} Minutes</li>
+            </b-col>
+            <b-col>
+              <li>{{ recipe.aggregateLikes }} Likes</li>
+            </b-col>
+          </b-row>
+        </ul>
+      </div>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -73,13 +105,13 @@ export default {
 <style scoped>
 .recipe-preview {
   display: inline-block;
-  width: 90%;
+  width: 100%;
   height: 100%;
   position: relative;
   margin: 10px 10px;
 }
 .recipe-preview > .recipe-body {
-  width: 100%;
+  width: 95%;
   height: 200px;
   position: relative;
 }
@@ -103,19 +135,8 @@ export default {
   overflow: hidden;
 }
 
-.recipe-preview .recipe-footer .recipe-title {
-  padding: 10px 10px;
-  width: 100%;
-  font-size: 12pt;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
-
 .recipe-preview .recipe-footer ul.recipe-overview {
-  padding: 5px 10px;
+  padding: 10px 10px;
   width: 100%;
   display: -webkit-box;
   display: -moz-box;
@@ -141,8 +162,11 @@ export default {
   box-flex: 1;
   -webkit-flex-grow: 1;
   flex-grow: 1;
-  width: 90px;
+  width: 110px;
   display: table-cell;
   text-align: center;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 11pt;
+  color: blue;
 }
 </style>
