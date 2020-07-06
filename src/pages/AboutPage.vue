@@ -26,7 +26,7 @@
       to taste and eat.
       <br>
     </p>
-    <h5 style="color:black; font-size:0.65cm"><b><u>"We live to eat and not eat to live!" <br>Enjoy your meal!</u></b></h5>
+    <h5 style="color:black; font-size:0.65cm"><b><u>"We living to eat and not eating to live!" <br>Enjoy your meal!</u></b></h5>
     <p style=" font-size:1cm">&#128523;</p>
     <p style="color:black; font-size:0.65cm"><u>You can watch our previous projects in Github:</u>
       <br>
@@ -50,6 +50,6 @@ export default {};
 
 <style>
 /* .container{
-  background-color:white;
+  background-color:cornsilk;
 } */
 </style>

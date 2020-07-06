@@ -73,7 +73,8 @@
       </b-row>
     </div>
     <div v-if="this.recipes.length > 0">
-      <RecipePreviewList style="color:white" title="Results" :recipes="recipes"></RecipePreviewList>
+      <RecipePreviewList :class="{center: true}" 
+    style="width: 60%;color:whitesmoke;font-family: sans;" title="Results" :recipes="recipes"></RecipePreviewList>
     </div>
     <div>
       <b-modal ref="my-modal" hide-footer title="No Recipes Found">

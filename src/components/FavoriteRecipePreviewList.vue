@@ -1,6 +1,7 @@
 <template>
   <div>
-    <RecipePreviewList style="color:whitesmoke;font-family: sans;"  title="My Favorite Recipes" :recipes="recipes" />
+    <RecipePreviewList :class="{center: true}" 
+    style="width: 30%;color:whitesmoke;font-family: sans;"  title="My Favorite Recipes" :recipes="recipes" />
   </div>
 </template>
 
