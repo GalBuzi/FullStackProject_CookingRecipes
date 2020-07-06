@@ -1,5 +1,6 @@
 <template>
- <div class ="container">
+ <div>
+   <div class = "container" style="background-color:cornsilk;">
    <br>
     <h3 style="color:black;text-align: center"><u><b>About the development team:</b></u></h3>
     <br>
@@ -39,6 +40,7 @@
       <a href="https://github.com/SISE-Web-Development-Environments/assignment-3-3-shay_gal">Link to assignment 3.3 - Client side</a>
       <br>
     </p>
+    </div>
   </div>
 </template>
 
@@ -47,7 +49,7 @@ export default {};
 </script>
 
 <style>
-.container{
-  background-color:cornsilk;
-}
+/* .container{
+  background-color:white;
+} */
 </style>
