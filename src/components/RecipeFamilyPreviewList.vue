@@ -4,6 +4,7 @@
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
         <b-card
+          class="card"
           style="max-width: 35rem;border-color: rgb(241, 227, 227); border-style: solid;border-width: 15px;"
         >
           <RecipeFamilyPreview class="recipePreview" :recipe="r" />
@@ -36,6 +37,9 @@ export default {
 <style lang="scss" scoped>
 .container {
   min-height: 400px;
+}
+.card {
+  background: rgb(235, 200, 167);
 }
 
 .title {

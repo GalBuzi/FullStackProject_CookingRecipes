@@ -5,7 +5,8 @@
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
         <b-card
-          style="max-width: 35rem;border-color: rgb(241, 227, 227); border-style: solid;border-width: 15px;"
+          class="card"
+          style="max-width: 35rem;max-height:50rem;border-color: rgb(241, 227, 227); border-style: solid;border-width: 15px; color:red"
         >
           <RecipePersonalPreview class="recipePreview" :recipe="r" />
         </b-card>
@@ -46,5 +47,8 @@ export default {
   font-family: "Comic Sans MS", cursive, sans-serif;
   color: whitesmoke;
   text-align: center;
+}
+.card {
+  background: rgb(235, 200, 167);
 }
 </style>

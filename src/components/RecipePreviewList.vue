@@ -4,6 +4,7 @@
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
         <b-card
+          class="card"
           style="max-width: 35rem;border-color: rgb(241, 227, 227); border-style: solid;border-width: 15px; "
         >
           <RecipePreview class="recipePreview" :recipe="r" />
@@ -37,6 +38,9 @@ export default {
 .container {
   min-height: 400px;
   //color:rgb(241, 227, 227)
+}
+.card {
+  background: rgb(235, 200, 167);
 }
 
 .title {

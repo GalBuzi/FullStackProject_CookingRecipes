@@ -79,7 +79,8 @@
     </div>
     <div v-if="this.recipes.length > 0">
       <RecipePreviewList
-        style="color:white"
+        :class="{ center: true }"
+        style="width: 60%;color:whitesmoke;font-family: sans;"
         title="Results"
         :recipes="recipes"
       ></RecipePreviewList>
