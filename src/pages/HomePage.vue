@@ -55,4 +55,10 @@ export default {
   pointer-events: none;
   cursor: default;
 }
+.title{
+  font-size:2.4cm;
+  font-weight: bold;
+  -webkit-text-stroke: 2px black; /* width and color */
+  font-family: sans; color:whitesmoke;
+}
 </style>

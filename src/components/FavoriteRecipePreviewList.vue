@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RecipePreviewList title="My Favorite Recipes" :recipes="recipes" />
+    <RecipePreviewList style="color:whitesmoke;font-family: sans;"  title="My Favorite Recipes" :recipes="recipes" />
   </div>
 </template>
 

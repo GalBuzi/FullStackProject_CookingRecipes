@@ -7,10 +7,11 @@
       <img :src="recipe.image" class="recipe-image" />
     </div>
     <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
+      <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size:0.7cm; color:blue" 
+        :title="recipe.title" class="recipe-title">
         {{ recipe.title }}
       </div>
-      <ul class="recipe-overview">
+      <ul style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size:0.45cm; color:blue" class="recipe-overview">
         <li v-if="isVegan()">
           Vegan:
           <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
@@ -19,7 +20,7 @@
           Vegan:
           <b-icon icon="x-square" style="color: #000000;"></b-icon>
         </li>
-
+        
         <li v-if="isVegetarian()">
           Vegetarian:
           <b-icon icon="check-square" style="color: #00ff00;"></b-icon>
@@ -103,6 +104,7 @@ export default {
   width: 100%;
   height: 200px;
   position: relative;
+  
 }
 
 .recipe-preview .recipe-body .recipe-image {

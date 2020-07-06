@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RecipePersonalPreviewList title="My Personal Recipes" :recipes="recipes" />
+    <RecipePersonalPreviewList style="color:whitesmoke;font-family: sans;"  title="My Personal Recipes" :recipes="recipes" />
   </div>
 </template>
 

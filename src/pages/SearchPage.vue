@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Search Page</h1>
+    <h1 class="title" style="color:white">Search Page</h1>
     <div>
       <b-row class="rows">
         <b-col class="cols">
@@ -18,7 +18,7 @@
       </b-row>
       <b-row class="rows">
         <b-col class="cols">
-          Choose Cuisine:
+          <h4 style="color:white">Choose Cuisine:</h4>
           <b-form-select
             v-model="cuisine_type"
             :options="cuisines_types"
@@ -26,7 +26,7 @@
           ></b-form-select>
         </b-col>
         <b-col class="cols">
-          Choose Diet:
+          <h4 style="color:white">Choose Diet:</h4>
           <b-form-select
             v-model="diet"
             :options="all_diets"
@@ -34,7 +34,7 @@
           ></b-form-select>
         </b-col>
         <b-col class="cols">
-          Choose Intolerance:
+          <h4 style="color:white">Choose Intolerance:</h4>
           <b-form-select
             v-model="intolerance"
             :options="all_intolerances"
@@ -50,8 +50,8 @@
           >
         </b-col>
         <b-col class="cols">
-          <div v-if="$root.store.username">
-            Your last search was: {{ lastSearch }}
+          <div style="color:white; font-size:0.6cm;" v-if="$root.store.username">
+            Your last search was: {{ lastSearch }} 
           </div>
         </b-col>
       </b-row>
@@ -73,7 +73,7 @@
       </b-row>
     </div>
     <div v-if="this.recipes.length > 0">
-      <RecipePreviewList title="Results" :recipes="recipes"></RecipePreviewList>
+      <RecipePreviewList style="color:white" title="Results" :recipes="recipes"></RecipePreviewList>
     </div>
     <div>
       <b-modal ref="my-modal" hide-footer title="No Recipes Found">

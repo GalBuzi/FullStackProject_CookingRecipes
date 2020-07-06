@@ -132,6 +132,9 @@ export default {
   margin-right: auto;
   width: 50%;
 }
+.container{
+  background-color:cornsilk;
+}
 /* .recipe-header{
 
 } */

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <RecipePreviewList title="Random Recipes" :recipes="recipes" />
+      <RecipePreviewList title="Random Recipes" style="color:whitesmoke;font-family: sans;" :recipes="recipes" />
     </div>
     <br />
     <br />
@@ -75,4 +75,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>
