@@ -1,9 +1,10 @@
 <template>
- <div>
-    <h3 style="color:white"><u><b>About the development team:</b></u></h3>
+ <div class ="container">
+   <br>
+    <h3 style="color:black;text-align: center"><u><b>About the development team:</b></u></h3>
     <br>
-    <h5 style="color:white; font-size:0.65cm"><b><u>Shay Eretz Kdosha & Gal Buzaglo</u></b></h5>
-    <p style="color:white; font-size:0.65cm">
+    <h5 style="color:black; font-size:0.65cm"><b><u>Shay Eretz Kdosha & Gal Buzaglo</u></b></h5>
+    <p style="color:black; font-size:0.65cm">
       We are Fourth year students pursuing a degree in Software and Information Systems Engineering (SISE) at Ben Gurion University, Beer Sheva.
       <br>We got skills such Managerial abilities, teamwork, interpersonal relationships, high work ethic and ability to work under pressure.
       <br>In the last past years we got experience in a lot Systems and different frameworks such as: Java, Pyhton, C#, C, C++, SQL and more.
@@ -11,8 +12,8 @@
       <br>This website is our final project in this course and it based on all the things that we have learned in web development. 
     </p>
     <br>
-    <h3 style="color:white"><u><b>About the project:</b></u> </h3> 
-    <p style="color:white; font-size:0.65cm">
+    <h3 style="color:black;text-align: center"><u><b>About the project:</b></u> </h3> 
+    <p style="color:black; font-size:0.65cm">
       This project is a food recipes website.
       <br>
       In this website a user can open an account and do many actions such as: looking for specific recipe,<br> 
@@ -24,9 +25,9 @@
       to taste and eat.
       <br>
     </p>
-    <h5 style="color:white; font-size:0.65cm"><b><u>"We live to eat and not eat to live!" <br>Enjoy your meal!</u></b></h5>
+    <h5 style="color:black; font-size:0.65cm"><b><u>"We live to eat and not eat to live!" <br>Enjoy your meal!</u></b></h5>
     <p style=" font-size:1cm">&#128523;</p>
-    <p style="color:white; font-size:0.65cm"><u>You can watch our previous projects in Github:</u>
+    <p style="color:black; font-size:0.65cm"><u>You can watch our previous projects in Github:</u>
       <br>
       Assignment 3.1: 
       <a href="https://github.com/SISE-Web-Development-Environments/assignment3-1-shay_gal-assignment3-1">Link to assignment 3.1 - API</a>
@@ -46,4 +47,7 @@ export default {};
 </script>
 
 <style>
+.container{
+  background-color:cornsilk;
+}
 </style>
