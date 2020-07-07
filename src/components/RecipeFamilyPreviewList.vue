@@ -5,7 +5,7 @@
       <b-col>
         <b-card
           class="card"
-          style="max-width: 35rem;border-color: rgb(241, 227, 227); border-style: solid;border-width: 15px;"
+          style="max-width: 35rem;border-color: rgb(247, 206, 168); border-style: solid;border-width: 15px;"
         >
           <RecipeFamilyPreview class="recipePreview" :recipe="r" />
         </b-card>
@@ -39,7 +39,7 @@ export default {
   min-height: 400px;
 }
 .card {
-  background: rgb(235, 200, 167);
+  background: rgb(247, 239, 239);
 }
 
 .title {

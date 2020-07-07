@@ -2,7 +2,7 @@
   <div class="container">
     <div v-if="recipe">
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
+        <h1><u>{{ recipe.title }}</u></h1>
         <img :src="recipe.image" class="center" />
       </div>
       <div class="recipe-body">
@@ -156,6 +156,8 @@ export default {
 }
 .container{
   background-color:cornsilk;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 0.7cm;
 }
 /* .recipe-header{
 
