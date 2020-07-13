@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <h1 class="title">Search Page</h1>
+    <br />
+    <br />
     <div>
       <b-row class="rows">
         <b-col class="cols">
@@ -16,6 +18,7 @@
           ></b-form-select>
         </b-col>
       </b-row>
+      <br />
       <b-row class="rows">
         <b-col class="cols">
           <h4 class="h4">Cuisine:</h4>
@@ -56,20 +59,8 @@
             >
           </div>
         </b-col>
-        <b-col>
-          <div class="buttonStyle">
-            <b-button
-              class="button"
-              block
-              pill
-              variant="light"
-              @click="getLastSearch()"
-              >Get Last Search</b-button
-            >
-          </div>
-          <!-- <div v-if="$root.store.username">Last Search: {{ lastSearch }}</div> -->
-        </b-col>
       </b-row>
+      <br />
       <b-row v-if="this.recipes.length > 0">
         <!-- Sort By: -->
         <!-- <b-form-select
@@ -270,27 +261,14 @@ export default {
     hideModal() {
       this.$refs["my-modal"].hide();
     },
-    async getLastSearch() {
-      let user = this.$root.store.username;
-      let arr = this.$root.store.history[user];
-      console.log(arr);
-      if (arr.length > 0) {
-        console.log(arr.length);
-        this.currentSearchQuery = arr[0];
-        this.numOfRecipesToSearch = arr[1];
-        this.cuisine_type = arr[2];
-        this.diet = arr[3];
-        this.intolerance = arr[4];
-      }
-    },
   },
 };
 </script>
 
 <style>
 .buttonStyle {
-  width: 50%;
-  padding-left: 10%;
+  width: 95%;
+  padding-left: 5%;
 }
 
 .button {
