@@ -19,7 +19,7 @@
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   font-family:'Comic Sans MS', cursive, sans-serif;
-  color: blue;"
+  color: black;"
       >
         {{ recipe.title }}
       </div>
@@ -194,6 +194,6 @@ export default {
   text-align: center;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-size: 11pt;
-  color: blue;
+  color: rgb(0, 0, 0);
 }
 </style>
