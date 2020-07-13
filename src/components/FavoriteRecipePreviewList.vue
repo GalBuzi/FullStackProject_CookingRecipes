@@ -1,7 +1,11 @@
 <template>
   <div>
-    <RecipePreviewList :class="{center: true}" 
-    style="width: 30%;color:whitesmoke;font-family: sans;"  title="My Favorite Recipes" :recipes="recipes" />
+    <RecipePreviewList
+      :class="{ center: true }"
+      style="width: 45%;color:whitesmoke;font-family: sans;"
+      title="My Favorite Recipes"
+      :recipes="recipes"
+    />
   </div>
 </template>
 
@@ -30,7 +34,7 @@ export default {
           // }
         );
 
-        console.log(response);
+        // console.log(response);
         const recipes = response.data;
         this.recipes = [];
         this.recipes.push(...recipes);

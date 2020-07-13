@@ -116,12 +116,14 @@ export default {
         );
 
         this.$root.store.addFavouritesRecipes(fav_array.data);
+        console.log(fav_array.data);
 
         const viewed_array = await this.axios.get(
           this.$root.store.server + "/users/userInfoLastViewed"
         );
 
         this.$root.store.addViewedRecipes(viewed_array.data);
+        console.log(viewed_array.data);
 
         this.$router.push("/").catch((err) => {});
       } catch (err) {

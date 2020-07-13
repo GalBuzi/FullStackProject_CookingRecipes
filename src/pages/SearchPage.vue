@@ -200,10 +200,10 @@ export default {
             },
           }
         );
-        console.log(response);
+        // console.log(response);
 
         if (response.data.length === 0) {
-          console.log("no results");
+          // console.log("no results");
           this.showModal();
           this.currentSearchQuery = "";
           return;
@@ -214,16 +214,16 @@ export default {
         console.log(this.recipes);
 
         if (this.$root.store.username) {
-          console.log("before parse");
+          // console.log("before parse");
           let history = JSON.parse(localStorage.getItem("history"));
-          console.log(history);
+          // console.log(history);
           let user_found = false;
           let username = this.$root.store.username;
-          console.log(history.length);
+          // console.log(history.length);
           for (let i = 0; i < history.length && !user_found; i++) {
-            console.log(history[i].username);
+            // console.log(history[i].username);
             if (username == history[i].username) {
-              console.log("found user");
+              // console.log("found user");
               user_found = true;
               history[i].recipes = this.recipes;
               this.$root.store.addSearchedRecipes(history);
@@ -231,7 +231,7 @@ export default {
           }
 
           if (!user_found) {
-            console.log("pushinggg");
+            // console.log("pushinggg");
             history.push({
               username: username,
               recipes: this.recipes,

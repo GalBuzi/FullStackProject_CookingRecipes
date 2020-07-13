@@ -36,7 +36,7 @@ export default {
         const recipes = response.data;
         this.recipes = [];
         this.recipes.push(...recipes);
-        // console.log(this.recipes);
+        console.log(this.recipes);
         let recipes_ids = [];
         for (let i = 0; i < this.recipes.length; i++) {
           recipes_ids.push(this.recipes[i].id);

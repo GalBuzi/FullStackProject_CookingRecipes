@@ -86,6 +86,7 @@ export default {
         // }
       );
       this.recipe = response.data;
+      console.log(this.recipe);
 
       // console.log("response.status", response.status);
       if (this.$root.store.username) {
