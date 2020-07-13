@@ -32,16 +32,12 @@ export default {
     RandomRecipesPreviewList,
     LastThreeViewedRecipesPreviewList,
   },
-  async created() {
-    const viewed_array = await this.axios.get(
-      this.$root.store.server + "/users/userInfoLastViewed"
-    );
-
-    this.$root.store.addViewedRecipes(viewed_array.data);
-
-    console.log(this.$root.store.viewed_recipes);
-    console.log(this.$root.store.favourites_recipes);
-  },
+  // async created() {
+  // if (this.$root.store.username) {
+  //   console.log(this.$root.store.viewed_recipes);
+  //   console.log(this.$root.store.favourites_recipes);
+  // }
+  // },
 };
 </script>
 

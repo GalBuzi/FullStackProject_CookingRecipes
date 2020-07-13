@@ -56,8 +56,18 @@
             >
           </div>
         </b-col>
-        <b-col class="lastSearch">
-          <div v-if="$root.store.username">Last Search: {{ lastSearch }}</div>
+        <b-col>
+          <div class="buttonStyle">
+            <b-button
+              class="button"
+              block
+              pill
+              variant="light"
+              @click="getLastSearch()"
+              >Get Last Search</b-button
+            >
+          </div>
+          <!-- <div v-if="$root.store.username">Last Search: {{ lastSearch }}</div> -->
         </b-col>
       </b-row>
       <b-row v-if="this.recipes.length > 0">
@@ -77,14 +87,28 @@
         </div>
       </b-row>
     </div>
-    <div v-if="this.recipes.length > 0">
-      <RecipePreviewList
-        :class="{ center: true }"
-        style="width: 60%;color:whitesmoke;font-family: sans;"
-        title="Results"
-        :recipes="recipes"
-      ></RecipePreviewList>
-    </div>
+
+    <b-col>
+      <div v-if="this.recipes.length > 0">
+        <RecipePreviewList
+          :class="{ center: true }"
+          style="width: 60%;color:whitesmoke;font-family: sans;"
+          title="Results"
+          :recipes="recipes"
+        ></RecipePreviewList>
+      </div>
+    </b-col>
+    <b-col>
+      <div v-if="this.lastSearch.length > 0">
+        <RecipePreviewList
+          :class="{ center: true }"
+          style="width: 60%;color:whitesmoke;font-family: sans;"
+          title="Last Search Results"
+          :recipes="lastSearch"
+        ></RecipePreviewList>
+      </div>
+    </b-col>
+
     <div>
       <b-modal ref="my-modal" hide-footer title="No Recipes Found">
         <div class="d-block text-center">
@@ -126,7 +150,8 @@ export default {
         { value: "aggregateLikes", text: "Popularity" },
         { value: "readyInMinutes", text: "Duration" },
       ],
-      lastSearch: "",
+      // lastSearch: "",
+      lastSearch: [],
       cuisines_types: [],
       all_diets: [],
       all_intolerances: [],
@@ -134,29 +159,42 @@ export default {
     };
   },
   async created() {
-    console.log(this.$root.store.search_history);
-    this.lastSearch = this.$root.store.search_history;
+    let history_storage = JSON.parse(localStorage.getItem("history"));
+    console.log("1111111");
+    console.log(history_storage);
+
+    // if (history_storage.length == 0) {
+    //   console.log("222222222");
+    //   this.$root.store.addSearchedRecipes(new Array());
+    // } else
+    if (this.$root.store.username) {
+      console.log("3333333333");
+      console.log(history_storage);
+      let username = this.$root.store.username;
+      for (let i = 0; i < history_storage.length; i++) {
+        let obj = history_storage[i];
+        console.log(obj);
+        console.log("444444444444");
+        if (username == history_storage[i].username) {
+          this.lastSearch = history_storage[i].recipes;
+        }
+      }
+    }
   },
   mounted() {
     this.cuisines_types.push(...cuisines);
     this.all_diets.push(...diets);
     this.all_intolerances.push(...intolerances);
-    console.log(this.cuisines_types);
+    // console.log(this.cuisines_types);
   },
   methods: {
     async search() {
+      while (this.lastSearch.length > 0) {
+        this.lastSearch.pop();
+      }
+      this.lastSearch.push(...this.recipes);
       this.recipes = [];
       if (this.numOfRecipesToSearch != "" && this.currentSearchQuery != "") {
-        if (this.$root.store.username) {
-          let arr = [];
-          arr.push(this.currentSearchQuery);
-          arr.push(this.numOfRecipesToSearch);
-          this.lastSearch = '"' + arr[0] + '" with ' + arr[1] + " results";
-          this.$root.store.addSearchedRecipes(
-            '"' + arr[0] + '" with ' + arr[1] + " results"
-          );
-        }
-
         const response = await this.axios.get(
           this.$root.store.server +
             "/recipes/search/query/" +
@@ -177,11 +215,39 @@ export default {
           console.log("no results");
           this.showModal();
           this.currentSearchQuery = "";
+          return;
         }
 
         const results = response.data;
         this.recipes.push(...results);
         console.log(this.recipes);
+
+        if (this.$root.store.username) {
+          console.log("before parse");
+          let history = JSON.parse(localStorage.getItem("history"));
+          console.log(history);
+          let user_found = false;
+          let username = this.$root.store.username;
+          console.log(history.length);
+          for (let i = 0; i < history.length && !user_found; i++) {
+            console.log(history[i].username);
+            if (username == history[i].username) {
+              console.log("found user");
+              user_found = true;
+              history[i].recipes = this.recipes;
+              this.$root.store.addSearchedRecipes(history);
+            }
+          }
+
+          if (!user_found) {
+            console.log("pushinggg");
+            history.push({
+              username: username,
+              recipes: this.recipes,
+            });
+            this.$root.store.addSearchedRecipes(history);
+          }
+        }
       } else {
         this.showModal();
       }
@@ -203,6 +269,19 @@ export default {
     },
     hideModal() {
       this.$refs["my-modal"].hide();
+    },
+    async getLastSearch() {
+      let user = this.$root.store.username;
+      let arr = this.$root.store.history[user];
+      console.log(arr);
+      if (arr.length > 0) {
+        console.log(arr.length);
+        this.currentSearchQuery = arr[0];
+        this.numOfRecipesToSearch = arr[1];
+        this.cuisine_type = arr[2];
+        this.diet = arr[3];
+        this.intolerance = arr[4];
+      }
     },
   },
 };

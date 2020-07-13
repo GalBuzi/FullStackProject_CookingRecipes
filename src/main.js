@@ -84,9 +84,8 @@ const shared_data = {
   favourites_recipes: localStorage.favourites_recipes
     ? JSON.parse(localStorage.favourites_recipes)
     : [],
-  search_history: localStorage.search_history
-    ? localStorage.search_history
-    : "",
+
+  history: localStorage.history ? localStorage.history : [],
 
   login(username) {
     localStorage.setItem("username", username);
@@ -97,6 +96,9 @@ const shared_data = {
     console.log("logout");
     Vue.$cookies.remove("session");
     localStorage.removeItem("username");
+    localStorage.removeItem("viewed_recipes");
+    localStorage.removeItem("favourites_recipes");
+
     this.username = undefined;
   },
   addViewedRecipes(viewed_recipes) {
@@ -110,9 +112,9 @@ const shared_data = {
     );
     this.favourites_recipes = favourites_recipes;
   },
-  addSearchedRecipes(search_history) {
-    localStorage.setItem("search_history", search_history);
-    this.search_history = search_history;
+  addSearchedRecipes(history) {
+    localStorage.setItem("history", JSON.stringify(history));
+    this.history = history;
   },
 };
 

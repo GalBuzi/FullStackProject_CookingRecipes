@@ -39,9 +39,7 @@
               <div>Servings: {{ recipe.servings }}</div>
               <div>Likes: {{ recipe.aggregateLikes }} likes</div>
               <div>
-                <b-button
-                  variant="outline-warning"
-                  @click="addRecipeToFavourites()"
+                <b-button variant="warning" @click="addRecipeToFavourites()"
                   >Add To Favourites</b-button
                 >
               </div>
@@ -154,8 +152,8 @@ export default {
   margin-right: auto;
   width: 50%;
 }
-.container{
-  background-color:cornsilk;
+.container {
+  background-color: cornsilk;
 }
 /* .recipe-header{
 
