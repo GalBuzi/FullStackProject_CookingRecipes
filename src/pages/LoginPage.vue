@@ -110,6 +110,7 @@ export default {
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
+        //check
 
         const fav_array = await this.axios.get(
           this.$root.store.server + "/users/userInfoFavourites"
