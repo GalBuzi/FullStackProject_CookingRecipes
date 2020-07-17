@@ -1,0 +1,30 @@
+{
+  "name": "assignment-3-2-shay_gal-assignment3-1",
+  "version": "1.0.0",
+  "description": "Assignment 3 - Web Developing ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SISE-Web-Development-Environments/assignment-3-2-shay_gal-assignment3-1.git"
+  },
+  "author": "Gal Buzaglo & Shay Eretz Kdosha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SISE-Web-Development-Environments/assignment-3-2-shay_gal-assignment3-1/issues"
+  },
+  "homepage": "https://github.com/SISE-Web-Development-Environments/assignment-3-2-shay_gal-assignment3-1#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "client-sessions": "^0.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mssql": "^6.2.0"
+  }
+}

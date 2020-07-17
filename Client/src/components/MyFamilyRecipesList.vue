@@ -1,7 +1,11 @@
 <template>
   <div>
-    <RecipeFamilyPreviewList :class="{center: true}" 
-    style="width: 30%;color:whitesmoke;font-family: sans;"  title="My Family Recipes" :recipes="recipes" />
+    <RecipeFamilyPreviewList
+      :class="{ center: true }"
+      style="width: 45%;color:whitesmoke;font-family: sans;"
+      title="My Family Recipes"
+      :recipes="recipes"
+    />
   </div>
 </template>
 
@@ -43,5 +47,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
