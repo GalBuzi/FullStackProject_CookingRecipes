@@ -23,8 +23,8 @@ router.get("/search/query/:searchQuery/amount/:num", async (req, res) => {
     const { searchQuery, num } = req.params;
     //set search parameters
     const search_params = {};
-    search_params.query = searchQuery;
-    search_params.number = num;
+    if (searchQuery != "") search_params.query = searchQuery;
+    if (num != "") search_params.number = num;
     search_params.instructionsRequired = true;
     const query_params = {};
     if (req.query.cuisine != "") {

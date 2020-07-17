@@ -185,7 +185,7 @@ export default {
       }
       this.lastSearch.push(...this.recipes);
       this.recipes = [];
-      if (this.numOfRecipesToSearch != "" && this.currentSearchQuery != "") {
+      if (this.currentSearchQuery != "") {
         const response = await this.axios.get(
           this.$root.store.server +
             "/recipes/search/query/" +
