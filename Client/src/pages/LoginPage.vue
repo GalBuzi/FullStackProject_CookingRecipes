@@ -150,4 +150,12 @@ export default {
 .container {
   max-width: 400px;
 }
+
+.title {
+  font-size: 40pt;
+  font-weight: bold;
+  -webkit-text-stroke: 2px black; /* width and color */
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: whitesmoke;
+}
 </style>
