@@ -1,0 +1,1403 @@
+openapi: 3.0.0
+info:
+  title: Shay & Gal - Recipes API
+  description: This is an uptaded API for Assignment 3.2
+  contact:
+    name: Shay Eretz Kdosha & Gal Buzaglo
+    email: shayek34@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.3.3
+servers:
+- url: https://virtserver.swaggerhub.com/GalBuzi/assignment3/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/ShayEK34/Example/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /register:
+    post:
+      tags:
+      - Authentication
+      summary: Sign up, adding new user to the system and return authentication.
+      requestBody:
+        description: A JSON object containing the register parameters.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        "200":
+          description: Successfully registerd, new user is in the system. The session
+            ID returned a authentication  cookie - `session`.
+          headers:
+            Set-Cookie:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: session=abcde12345; Path=/; HttpOnly
+        "409":
+          description: Username taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error409'
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security: []
+  /login:
+    post:
+      tags:
+      - Authentication
+      summary: Logs in and returns the authentication  cookie
+      requestBody:
+        description: A JSON object containing the username and password.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: Successfully authenticated -the user is in the system. The
+            session ID is returned in a cookie named `JSESSIONID`.
+          headers:
+            Set-Cookie:
+              style: simple
+              explode: false
+              schema:
+                type: string
+                example: JSESSIONID=abcde12345; Path=/; HttpOnly
+        "401":
+          description: incorrect username/password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security: []
+  /recipes/getRecipe/id/{recipeId}:
+    get:
+      tags:
+      - Recipes
+      summary: Get full recipe info by id.
+      description: get information about spesific recipe
+      parameters:
+      - name: recipeId
+        in: path
+        description: The ID of the recipe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 633508
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fullRecipeInfo'
+        "404":
+          description: No results found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+  /reciepes/search/query/{searchQuery}/amount/{num}:
+    get:
+      tags:
+      - Recipes
+      summary: Search a recipe
+      description: Search recipe by name
+      parameters:
+      - name: searchQuery
+        in: path
+        description: The name of recipe to enter the query.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: num
+        in: path
+        description: number of results that will return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          default: 5
+          enum:
+          - 5
+          - 10
+          - 15
+      - name: cousine
+        in: query
+        description: Kind of cousine to search by.
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Cousines'
+        example: French
+      - name: diet
+        in: query
+        description: Kind of diets recipes to search by.
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Diets'
+        example: Vegetarian
+      - name: intolerance
+        in: query
+        description: Kind of diets recipes to search by.
+        required: false
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Intolerances'
+        example: Seafood
+      responses:
+        "200":
+          description: returns array of recipes according to the number specified
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - id: 29474
+                  title: pizza
+                  readyInMinutes: 30
+                  aggregateLikes: 100
+                  vegetrian: true
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                - id: 30154
+                  title: burger
+                  readyInMinutes: 45
+                  aggregateLikes: 200
+                  vegetrian: false
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                - id: 16424
+                  title: pasta
+                  readyInMinutes: 15
+                  aggregateLikes: 50
+                  vegetrian: true
+                  vegan: true
+                  glutenFree: false
+                  image: recipe.jpghttps://spoonacular.com/recipeImages/640509-556x370.jpg
+                items:
+                  $ref: '#/components/schemas/recipe'
+        "404":
+          description: No results found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+  /recipes/getRandomRecipes:
+    get:
+      tags:
+      - Recipes
+      summary: return three random recipes
+      description: The server return three random recipes.
+      responses:
+        "200":
+          description: Get three random recipes maped by key - recipe id and value
+            - object of recipe.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - id: 29474
+                  title: pizza
+                  readyInMinutes: 30
+                  aggregateLikes: 100
+                  vegetrian: true
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                - id: 30154
+                  title: burger
+                  readyInMinutes: 45
+                  aggregateLikes: 200
+                  vegetrian: false
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                - id: 16424
+                  title: pasta
+                  readyInMinutes: 15
+                  aggregateLikes: 50
+                  vegetrian: true
+                  vegan: true
+                  glutenFree: false
+                  image: recipe.jpghttps://spoonacular.com/recipeImages/640509-556x370.jpg
+                items:
+                  $ref: '#/components/schemas/recipe'
+        "404":
+          description: No results found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+  /users/addRecipeToFavourites/id/{id}:
+    post:
+      tags:
+      - Users
+      description: add a recipe to user's favourites
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 15746
+      responses:
+        "200":
+          description: recipe added successfully to user's favourites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/addRecipeToViewed/id/{id}:
+    post:
+      tags:
+      - Users
+      description: add a recipe to user's viewed history
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 15746
+      responses:
+        "200":
+          description: recipe added successfully to user's viewed history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/getLastThreeViewedRecipes:
+    get:
+      tags:
+      - Users
+      description: returns 3 recipes viewed recently by regiestered user.
+      responses:
+        "200":
+          description: 3 last viewed recipes returned to user.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - id: 29474
+                  title: pizza
+                  readyInMinutes: 30
+                  aggregateLikes: 100
+                  vegetrian: true
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                - id: 30154
+                  title: burger
+                  readyInMinutes: 45
+                  aggregateLikes: 200
+                  vegetrian: false
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                - id: 16424
+                  title: pasta
+                  readyInMinutes: 15
+                  aggregateLikes: 50
+                  vegetrian: true
+                  vegan: true
+                  glutenFree: false
+                  image: recipe.jpghttps://spoonacular.com/recipeImages/640509-556x370.jpg
+                items:
+                  $ref: '#/components/schemas/recipe'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/getMyFavourites:
+    get:
+      tags:
+      - Users
+      description: returns all favourites recipes by regiestered user.
+      responses:
+        "200":
+          description: favourites recipes returned to user.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - id: 29474
+                  title: pizza
+                  readyInMinutes: 30
+                  aggregateLikes: 100
+                  vegetrian: true
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                - id: 30154
+                  title: burger
+                  readyInMinutes: 45
+                  aggregateLikes: 200
+                  vegetrian: false
+                  vegan: false
+                  glutenFree: false
+                  image: https://spoonacular.com/recipeImages/640509-556x370.jpg
+                items:
+                  $ref: '#/components/schemas/recipe'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/getFamilyRecipes:
+    get:
+      tags:
+      - Users
+      description: returns all favourites recipes by regiestered user.
+      responses:
+        "200":
+          description: favourites recipes returned to user.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - id: 11
+                  RecipeOwner: galbuz
+                  Occasion:
+                  - Friday dinner
+                  title: Lemon Garlic Rice
+                  readyInMinutes: 25
+                  aggregateLikes: 124
+                  ingredients:
+                  - name: chicken stock
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294555/Instant-Pot-Chicken-Stock-finished-4x5-2_st7rit.jpg
+                    amount:
+                      metric:
+                        value: "400"
+                        unit: ml
+                  - name: basmati rice
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294664/basmati_cwj8cu.jpg
+                    amount:
+                      metric:
+                        value: "200"
+                        unit: gr
+                  - name: butter
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg
+                    amount:
+                      metric:
+                        value: "60"
+                        unit: gr
+                  - name: minced fresh garlic
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: lemon juice
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295977/lemon_juice_r0rgsp.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: black pepper
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  instructions:
+                  - step: "1"
+                    instruction: Combine stock, rice, butter, garlic, and lemon juice
+                      into pot. Bring to a boil over medium heat.
+                  - step: "2"
+                    instruction: Cover with lid and reduce heat to medium-low.
+                  - step: "3"
+                    instruction: Simmer until stock is absorbed and rice is tender
+                      — about 15 minutes.
+                  - step: "4"
+                    instruction: Turn off heat. Add pepper. Sprinkle with parsley,
+                      if using, and stir well.
+                  image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296675/result_temkgf.jpg
+                  servings: 4
+                  vegan: true
+                  vegetarian: true
+                  glutenFree: false
+                - id: 22
+                  RecipeOwner: galbuz
+                  Occasion:
+                  - Lunch
+                  title: Baked Chipotle Chicken Thighs
+                  readyInMinutes: 40
+                  aggregateLikes: 100
+                  ingredients:
+                  - name: bone-in, skin-on chicken thighs
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297662/thighs_l558qs.jpg
+                    amount:
+                      metric:
+                        value: "1"
+                        unit: kg
+                  - name: canned chipotle peppers in adobo sauce
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297840/canned_chipotle_peppers_in_adobo_sauce_hghzgj.jpg
+                    amount:
+                      metric:
+                        value: "800"
+                        unit: gr
+                  - name: adobo sauce
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: minced fresh garlic
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                      us:
+                        value: "1"
+                        unit: tablespoon
+                  - name: onion powder
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298034/onion_powder_bt9sir.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: chili powder
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298087/chili_powder_xvkpdx.jpg
+                    amount:
+                      metric:
+                        value: "26"
+                        unit: gr
+                  - name: dried oregano
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298214/dried_oregano_z2xxqo.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: salt
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298289/salt_x9gq6s.jpg
+                    amount:
+                      metric:
+                        value: "7"
+                        unit: gr
+                  - name: black pepper
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg
+                    amount:
+                      metric:
+                        value: "7"
+                        unit: gr
+                  - name: olive oil
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298498/olive_oil_vvpb44.jpg
+                    amount:
+                      metric:
+                        value: "40"
+                        unit: ml
+                  instructions:
+                  - step: "1"
+                    instruction: Dice chipotle peppers and add to bowl along with
+                      adobo sauce.
+                  - step: "2"
+                    instruction: Add remaining MARINADE ingredients. Mix well in bowl,
+                      or pulse in food processor, until combined.
+                  - step: "3"
+                    instruction: Place chicken and marinade into bag and seal, making
+                      sure chicken is well coated. Let marinate in refrigerator at
+                      least three hours, flipping the bag over at least once.
+                  - step: "4"
+                    instruction: Set oven to 400 degrees Fahrenheit. Transfer marinated
+                      chicken and marinade to baking dish.  Bake until chicken has
+                      an internal temperature of 165 degrees and is fork tender–about
+                      30 minutes.
+                  image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298680/Baked_Chipotle_Chicken_Thighs_qarcw1.jpg
+                  servings: 4
+                  vegan: false
+                  vegetarian: false
+                  glutenFree: false
+                - id: 33
+                  RecipeOwner: galbuz
+                  Occasion:
+                  - Breakfast
+                  title: Tomato Avocado Toast with Eggs
+                  readyInMinutes: 5
+                  aggregateLikes: 84
+                  ingredients:
+                  - name: slices whole wheat bread, toasted
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299156/slices_whole_wheat_bread_toasted_pl3lm9.jpg
+                    amount:
+                      metric:
+                        value: "200"
+                        unit: gr
+                  - name: avocado
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299467/avocado_kxqgi2.jpg
+                    amount:
+                      metric:
+                        value: "200"
+                        unit: gr
+                  - name: egg
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299598/2_eggs_vyxuwm.jpg
+                    amount:
+                      metric:
+                        value: "100"
+                        unit: gr
+                  - name: tomato
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299712/Tomato_yvzjwr.jpg
+                    amount:
+                      metric:
+                        value: "85"
+                        unit: gr
+                  instructions:
+                  - step: "1"
+                    instruction: Place a slice of toast on each plate.
+                  - step: "2"
+                    instruction: Melt butter in skillet over medium heat. Meanwhile,
+                      place avocado in mixing bowl and mash thoroughly. Set bowl aside.
+                  - step: "3"
+                    instruction: Carefully crack an egg into melted butter on one
+                      side of skillet. Repeat with second egg on opposite side of
+                      skillet. Let eggs cook until whites are nearly set – about 2
+                      minutes. Meanwhile, spread mashed avocado across both pieces
+                      of toast.
+                  - step: "4"
+                    instruction: Flip eggs and let cook until over medium – about
+                      1 minute. Meanwhile, slice tomato, then distribute slices to
+                      lay across each piece of avocado toast.
+                  - step: "5"
+                    instruction: ' Top each piece of tomato avocado toast with fried
+                      egg.'
+                  image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299825/tomato-avocado-toast-with-eggs1_zzgbdq.jpg
+                  servings: 2
+                  vegan: true
+                  vegetarian: false
+                  glutenFree: false
+                items:
+                  $ref: '#/components/schemas/familyPersonalRecipe'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/getPersonalRecipes:
+    get:
+      tags:
+      - Users
+      description: returns all personal recipes by regiestered user.
+      responses:
+        "200":
+          description: personal recipes returned to user.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - id: 11
+                  RecipeOwner: galbuz
+                  Occasion:
+                  - Friday dinner
+                  title: Lemon Garlic Rice
+                  readyInMinutes: 25
+                  aggregateLikes: 124
+                  ingredients:
+                  - name: chicken stock
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294555/Instant-Pot-Chicken-Stock-finished-4x5-2_st7rit.jpg
+                    amount:
+                      metric:
+                        value: "400"
+                        unit: ml
+                  - name: basmati rice
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294664/basmati_cwj8cu.jpg
+                    amount:
+                      metric:
+                        value: "200"
+                        unit: gr
+                  - name: butter
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg
+                    amount:
+                      metric:
+                        value: "60"
+                        unit: gr
+                  - name: minced fresh garlic
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: lemon juice
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295977/lemon_juice_r0rgsp.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: black pepper
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  instructions:
+                  - step: "1"
+                    instruction: Combine stock, rice, butter, garlic, and lemon juice
+                      into pot. Bring to a boil over medium heat.
+                  - step: "2"
+                    instruction: Cover with lid and reduce heat to medium-low.
+                  - step: "3"
+                    instruction: Simmer until stock is absorbed and rice is tender
+                      — about 15 minutes.
+                  - step: "4"
+                    instruction: Turn off heat. Add pepper. Sprinkle with parsley,
+                      if using, and stir well.
+                  image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296675/result_temkgf.jpg
+                  servings: 4
+                  vegan: true
+                  vegetarian: true
+                  glutenFree: false
+                - id: 22
+                  RecipeOwner: galbuz
+                  Occasion:
+                  - Lunch
+                  title: Baked Chipotle Chicken Thighs
+                  readyInMinutes: 40
+                  aggregateLikes: 100
+                  ingredients:
+                  - name: bone-in, skin-on chicken thighs
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297662/thighs_l558qs.jpg
+                    amount:
+                      metric:
+                        value: "1"
+                        unit: kg
+                  - name: canned chipotle peppers in adobo sauce
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297840/canned_chipotle_peppers_in_adobo_sauce_hghzgj.jpg
+                    amount:
+                      metric:
+                        value: "800"
+                        unit: gr
+                  - name: adobo sauce
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: minced fresh garlic
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                      us:
+                        value: "1"
+                        unit: tablespoon
+                  - name: onion powder
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298034/onion_powder_bt9sir.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: chili powder
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298087/chili_powder_xvkpdx.jpg
+                    amount:
+                      metric:
+                        value: "26"
+                        unit: gr
+                  - name: dried oregano
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298214/dried_oregano_z2xxqo.jpg
+                    amount:
+                      metric:
+                        value: "13"
+                        unit: gr
+                  - name: salt
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298289/salt_x9gq6s.jpg
+                    amount:
+                      metric:
+                        value: "7"
+                        unit: gr
+                  - name: black pepper
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg
+                    amount:
+                      metric:
+                        value: "7"
+                        unit: gr
+                  - name: olive oil
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298498/olive_oil_vvpb44.jpg
+                    amount:
+                      metric:
+                        value: "40"
+                        unit: ml
+                  instructions:
+                  - step: "1"
+                    instruction: Dice chipotle peppers and add to bowl along with
+                      adobo sauce.
+                  - step: "2"
+                    instruction: Add remaining MARINADE ingredients. Mix well in bowl,
+                      or pulse in food processor, until combined.
+                  - step: "3"
+                    instruction: Place chicken and marinade into bag and seal, making
+                      sure chicken is well coated. Let marinate in refrigerator at
+                      least three hours, flipping the bag over at least once.
+                  - step: "4"
+                    instruction: Set oven to 400 degrees Fahrenheit. Transfer marinated
+                      chicken and marinade to baking dish.  Bake until chicken has
+                      an internal temperature of 165 degrees and is fork tender–about
+                      30 minutes.
+                  image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298680/Baked_Chipotle_Chicken_Thighs_qarcw1.jpg
+                  servings: 4
+                  vegan: false
+                  vegetarian: false
+                  glutenFree: false
+                - id: 33
+                  RecipeOwner: galbuz
+                  Occasion:
+                  - Breakfast
+                  title: Tomato Avocado Toast with Eggs
+                  readyInMinutes: 5
+                  aggregateLikes: 84
+                  ingredients:
+                  - name: slices whole wheat bread, toasted
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299156/slices_whole_wheat_bread_toasted_pl3lm9.jpg
+                    amount:
+                      metric:
+                        value: "200"
+                        unit: gr
+                  - name: avocado
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299467/avocado_kxqgi2.jpg
+                    amount:
+                      metric:
+                        value: "200"
+                        unit: gr
+                  - name: egg
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299598/2_eggs_vyxuwm.jpg
+                    amount:
+                      metric:
+                        value: "100"
+                        unit: gr
+                  - name: tomato
+                    image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299712/Tomato_yvzjwr.jpg
+                    amount:
+                      metric:
+                        value: "85"
+                        unit: gr
+                  instructions:
+                  - step: "1"
+                    instruction: Place a slice of toast on each plate.
+                  - step: "2"
+                    instruction: Melt butter in skillet over medium heat. Meanwhile,
+                      place avocado in mixing bowl and mash thoroughly. Set bowl aside.
+                  - step: "3"
+                    instruction: Carefully crack an egg into melted butter on one
+                      side of skillet. Repeat with second egg on opposite side of
+                      skillet. Let eggs cook until whites are nearly set – about 2
+                      minutes. Meanwhile, spread mashed avocado across both pieces
+                      of toast.
+                  - step: "4"
+                    instruction: Flip eggs and let cook until over medium – about
+                      1 minute. Meanwhile, slice tomato, then distribute slices to
+                      lay across each piece of avocado toast.
+                  - step: "5"
+                    instruction: ' Top each piece of tomato avocado toast with fried
+                      egg.'
+                  image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299825/tomato-avocado-toast-with-eggs1_zzgbdq.jpg
+                  servings: 2
+                  vegan: true
+                  vegetarian: false
+                  glutenFree: false
+                items:
+                  $ref: '#/components/schemas/familyPersonalRecipe'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/getFamilyRecipe/id/{recipeId}:
+    get:
+      tags:
+      - Users
+      description: get a family recipe by it's id
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 15746
+      responses:
+        "200":
+          description: recipe added successfully to user's favourites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fullRecipeInfo'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/getPersonalRecipe/id/{recipeId}:
+    get:
+      tags:
+      - Users
+      description: get a personal recipe by it's id
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 15746
+      responses:
+        "200":
+          description: recipe added successfully to user's favourites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fullRecipeInfo'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/userInfoLastViewed:
+    get:
+      tags:
+      - Users
+      description: returns all recipe's ids that viewed recently by regiestered user.
+      responses:
+        "200":
+          description: all ids of last viewed recipes by user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_2'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+  /users/userInfoFavourites:
+    get:
+      tags:
+      - Users
+      description: returns all recipe's ids which are favourites of regiestered user.
+      responses:
+        "200":
+          description: all ids of favourites recipes by user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_2'
+        "404":
+          description: not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        "500":
+          description: Server error occured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      security:
+      - cookieAuth: []
+components:
+  schemas:
+    fullRecipeInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The recipe identifier, returned for futher processing and actions
+            on recipes.
+          example: 633508
+        title:
+          type: string
+          example: Baked Cheese Manicotti
+        readyInMinutes:
+          type: integer
+          description: the recipe time duration
+          example: 45
+        aggregateLikes:
+          type: integer
+          example: 1
+        vegetrian:
+          type: boolean
+          example: false
+        vegan:
+          type: boolean
+          example: false
+        glutenFree:
+          type: boolean
+          example: false
+        image:
+          type: string
+          description: the recipe image url
+          example: recipe.jpg
+        ingredients:
+          $ref: '#/components/schemas/recipeIngredients'
+        instructions:
+          $ref: '#/components/schemas/recipeStepsInstructions'
+    recipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The recipe identifier, returned for futher processing and actions
+            on recipes.
+          example: 29
+        title:
+          type: string
+          example: pizza
+        readyInMinutes:
+          type: integer
+          description: the recipe time duration
+          example: 30
+        aggregateLikes:
+          type: integer
+          example: 100
+        vegetrian:
+          type: boolean
+          example: true
+        vegan:
+          type: boolean
+          example: false
+        glutenFree:
+          type: boolean
+          example: false
+        image:
+          type: string
+          description: the recipe image url
+          example: recipe.jpg
+    familyPersonalRecipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: recipe's id
+        RecipeOwner:
+          type: string
+          description: who invented the recipe
+          example: gal
+        Occasion:
+          type: array
+          description: when we make the recipe
+          example:
+          - friday dinner
+          - holidays
+          items:
+            type: string
+        title:
+          type: string
+          description: name of recipe
+          example: pizza
+        readyInMinutes:
+          type: integer
+          description: the recipe time duration
+          example: 30
+        aggregateLikes:
+          type: integer
+          example: 142
+        ingredients:
+          $ref: '#/components/schemas/ingredientsFamilyPersonal'
+        instructions:
+          $ref: '#/components/schemas/recipeStepsInstructions'
+        image:
+          type: string
+          description: the recipe image url
+          example: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296675/result_temkgf.jpg
+        servings:
+          type: integer
+          example: 4
+        vegetrian:
+          type: boolean
+          example: true
+        vegan:
+          type: boolean
+          example: false
+        glutenFree:
+          type: boolean
+          example: false
+    recipeStepsInstructions:
+      type: array
+      example:
+      - step_number: "1"
+        step: Grease a 9" x 13" baking pan with 1 tbsp. butter and spread 12 cup of
+          the marinara sauce across the bottom of the pan. Set aside. Bring a 6-qt.
+          pot of salted water to a boil over high heat.
+      - step_number: "2"
+        step: Add the manicotti and cook until just tender, about 8 minutes.
+      - step_number: "3"
+        step: Drain manicotti and rinse under cold water; set aside.
+      - step_number: "4"
+        step: Heat oven to 45
+      - step_number: "5"
+        step: Heat remaining butter in a 12" skillet over medium heat.
+      - step_number: "6"
+        step: Add garlic and cook, stirring occasionally, until soft, about 5 minutes.
+      - step_number: "7"
+        step: Transfer garlic to a medium bowl along with the ricotta, 12 cup parmesan,
+          5 tbsp. chopped parsley, salt, pepper, nutmeg, and eggs and stir to combine.Spoon
+          some of the filling into both openings of each manicotti shell. (Alternatively,
+          transfer the ricotta mixture to a 1-gallon resealable plastic bag, snip
+          off a bottom corner of the bag, and pipe filling into pasta.) Repeat with
+          remaining manicotti shells.
+      - step_number: "8"
+        step: Transfer stuffed manicotti to prepared baking dish, making 2 rows.
+      - step_number: "9"
+        step: Spread the remaining marinara sauce over the manicotti and sprinkle
+          with remaining parmesan.
+      - step_number: "10"
+        step: Bake until hot and bubbly, about 20 minutes. Sprinkle with remaining
+          parsley.
+      - step_number: "11"
+        step: Let sit for 5 minutes before serving.
+      items:
+        type: string
+    ingredientsFamilyPersonal:
+      type: array
+      example:
+      - name: chicken stock
+        image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294555/Instant-Pot-Chicken-Stock-finished-4x5-2_st7rit.jpg
+        amount:
+          metric:
+            value: "400"
+            unit: ml
+      - name: basmati rice
+        image: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294664/basmati_cwj8cu.jpg
+        amount:
+          metric:
+            value: "200"
+            unit: gr
+      items:
+        $ref: '#/components/schemas/ingredientsFamilyPersonal_inner'
+    recipeIngredients:
+      type: array
+      example:
+      - ingredient_name: bell pepper
+        amount: 6
+        unit: servings
+      - ingredient_name: eggs
+        amount: 2
+        unit: ""
+      - ingredient_name: garlic
+        amount: 2
+        unit: cloves
+      - ingredient_name: marinara sauce
+        amount: 3
+        unit: cups
+      - ingredient_name: nutmeg
+        amount: 1
+        unit: tsp
+      - ingredient_name: parmesan
+        amount: 1
+        unit: cup
+      - ingredient_name: parsley
+        amount: 2
+        unit: tablespoons
+      - ingredient_name: shells
+        amount: 8
+        unit: oz
+      - ingredient_name: skim milk ricotta
+        amount: 4
+        unit: cups
+      - ingredient_name: unsalted butter
+        amount: 3
+        unit: tablespoons
+      items:
+        type: string
+    user:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: galBuz
+        firstName:
+          type: string
+          example: Gal
+        lastName:
+          type: string
+          example: Buzaglo
+        country:
+          type: string
+          example: Israel
+        password:
+          type: string
+          example: "1234"
+        email:
+          type: string
+          example: galbuz@gmail.com
+        urlProfilePicture:
+          type: string
+          example: https://res.cloudinary.com/do7qaduwg/image/upload/v1589535868/samples/people/smiling-man.jpg
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          maxLength: 8
+          minLength: 3
+          type: string
+          description: Contain only letters
+          example: gakbuz21
+        password:
+          maxLength: 10
+          minLength: 5
+          type: string
+          description: Contains letters with at least 1 numerical character and 1
+            special characters.
+      example:
+        username: galbuz123
+        password: galbuz1@
+    Cousines:
+      type: string
+      enum:
+      - African
+      - American
+      - British
+      - Cajun
+      - Caribbean
+      - Chinese
+      - Eastern European
+      - European
+      - French
+      - German
+      - Greek
+      - Indian
+      - Irish
+      - Italian
+      - Japanese
+      - Jewish
+      - Korean
+      - Latin American
+      - Mediterranean
+      - Mexican
+      - Middle Eastern
+      - Nordic
+      - Southern
+      - Spanish
+      - Thai
+      - Vietnamese
+    Diets:
+      type: string
+      enum:
+      - Gluten Free
+      - Ketogenic
+      - Vegetarian
+      - Lacto-Vegetarian
+      - Ovo-Vegetarian
+      - Vegan
+      - Pescetarian
+      - Paleo
+      - Primal
+      - Whole30
+    Intolerances:
+      type: string
+      enum:
+      - Dairy
+      - Egg
+      - Gluten
+      - Grain
+      - Peanut
+      - Seafood
+      - Sesame
+      - Shellfish
+      - Soy
+      - Sulfite
+      - Tree Nut
+      - Wheat
+    Error404:
+      type: object
+      properties:
+        Msg:
+          type: string
+          example: Page not found
+    Error401:
+      type: object
+      properties:
+        Msg:
+          type: string
+          example: incorrect input
+    Error409:
+      type: object
+      properties:
+        Msg:
+          type: string
+          example: Username taken, pick another
+    Error500:
+      type: object
+      properties:
+        Msg:
+          type: string
+          example: Server error
+    inline_response_200:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: added to favourites
+    inline_response_200_1:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: added to viewed history
+    inline_response_200_2:
+      type: object
+      properties:
+        recipe_id:
+          type: integer
+          description: The recipe identifier, returned for futher processing and actions
+            on recipes.
+    ingredientsFamilyPersonal_inner:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        amount:
+          type: object
+          properties:
+            value:
+              type: string
+            unit:
+              type: string
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      description: Session key to identify user session
+      name: session
+      in: cookie

@@ -1,0 +1,2053 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Shay &amp; Gal - Recipes API</title>
+    <style type="text/css">
+      body {
+      	font-family: Trebuchet MS, sans-serif;
+      	font-size: 15px;
+      	color: #444;
+      	margin-right: 24px;
+      }
+      
+      h1	{
+      	font-size: 25px;
+      }
+      h2	{
+      	font-size: 20px;
+      }
+      h3	{
+      	font-size: 16px;
+      	font-weight: bold;
+      }
+      hr	{
+      	height: 1px;
+      	border: 0;
+      	color: #ddd;
+      	background-color: #ddd;
+      }
+      
+      .app-desc {
+        clear: both;
+        margin-left: 20px;
+      }
+      .param-name {
+        width: 100%;
+      }
+      .license-info {
+        margin-left: 20px;
+      }
+      
+      .license-url {
+        margin-left: 20px;
+      }
+      
+      .model {
+        margin: 0 0 0px 20px;
+      }
+      
+      .method {
+        margin-left: 20px;
+      }
+      
+      .method-notes	{
+      	margin: 10px 0 20px 0;
+      	font-size: 90%;
+      	color: #555;
+      }
+      
+      pre {
+        padding: 10px;
+        margin-bottom: 2px;
+      }
+      
+      .http-method {
+       text-transform: uppercase;
+      }
+      
+      pre.get {
+        background-color: #0f6ab4;
+      }
+      
+      pre.post {
+        background-color: #10a54a;
+      }
+      
+      pre.put {
+        background-color: #c5862b;
+      }
+      
+      pre.delete {
+        background-color: #a41e22;
+      }
+      
+      .huge	{
+      	color: #fff;
+      }
+      
+      pre.example {
+        background-color: #f3f3f3;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      code {
+        white-space: pre;
+      }
+      
+      .nickname {
+        font-weight: bold;
+      }
+      
+      .method-path {
+        font-size: 1.5em;
+        background-color: #0f6ab4;
+      }
+      
+      .up {
+        float:right;
+      }
+      
+      .parameter {
+        width: 500px;
+      }
+      
+      .param {
+        width: 500px;
+        padding: 10px 0 0 20px;
+        font-weight: bold;
+      }
+      
+      .param-desc {
+        width: 700px;
+        padding: 0 0 0 20px;
+        color: #777;
+      }
+      
+      .param-type {
+        font-style: italic;
+      }
+      
+      .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+      }
+      
+      .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+      }
+      
+      .field-label {
+        padding: 0;
+        margin: 0;
+        clear: both;
+      }
+      
+      .field-items	{
+      	padding: 0 0 15px 0;
+      	margin-bottom: 15px;
+      }
+      
+      .return-type {
+        clear: both;
+        padding-bottom: 10px;
+      }
+      
+      .param-header {
+        font-weight: bold;
+      }
+      
+      .method-tags {
+        text-align: right;
+      }
+      
+      .method-tag {
+        background: none repeat scroll 0% 0% #24A600;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin: 2px;
+        color: #FFF;
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>Shay &amp; Gal - Recipes API</h1>
+    <div class="app-desc">This is an uptaded API for Assignment 3.2</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="shayek34@gmail.com">shayek34@gmail.com</a></div>
+    <div class="app-desc">Version: 1.0.3.3</div>
+    <div class="app-desc">BasePath:/GalBuzi/assignment3/1.0.0</div>
+    <div class="license-info">Apache 2.0</div>
+    <div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+    <ol>
+      <li>APIKey KeyParamName:session KeyInQuery:true KeyInHeader:false</li>
+    </ol>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Authentication">Authentication</a></h4>
+  <ul>
+  <li><a href="#loginPost"><code><span class="http-method">post</span> /login</code></a></li>
+  <li><a href="#registerPost"><code><span class="http-method">post</span> /register</code></a></li>
+  </ul>
+  <h4><a href="#Recipes">Recipes</a></h4>
+  <ul>
+  <li><a href="#reciepesSearchQuerySearchQueryAmountNumGet"><code><span class="http-method">get</span> /reciepes/search/query/{searchQuery}/amount/{num}</code></a></li>
+  <li><a href="#recipesGetRandomRecipesGet"><code><span class="http-method">get</span> /recipes/getRandomRecipes</code></a></li>
+  <li><a href="#recipesGetRecipeIdRecipeIdGet"><code><span class="http-method">get</span> /recipes/getRecipe/id/{recipeId}</code></a></li>
+  </ul>
+  <h4><a href="#Users">Users</a></h4>
+  <ul>
+  <li><a href="#usersAddRecipeToFavouritesIdIdPost"><code><span class="http-method">post</span> /users/addRecipeToFavourites/id/{id}</code></a></li>
+  <li><a href="#usersAddRecipeToViewedIdIdPost"><code><span class="http-method">post</span> /users/addRecipeToViewed/id/{id}</code></a></li>
+  <li><a href="#usersGetFamilyRecipeIdRecipeIdGet"><code><span class="http-method">get</span> /users/getFamilyRecipe/id/{recipeId}</code></a></li>
+  <li><a href="#usersGetFamilyRecipesGet"><code><span class="http-method">get</span> /users/getFamilyRecipes</code></a></li>
+  <li><a href="#usersGetLastThreeViewedRecipesGet"><code><span class="http-method">get</span> /users/getLastThreeViewedRecipes</code></a></li>
+  <li><a href="#usersGetMyFavouritesGet"><code><span class="http-method">get</span> /users/getMyFavourites</code></a></li>
+  <li><a href="#usersGetPersonalRecipeIdRecipeIdGet"><code><span class="http-method">get</span> /users/getPersonalRecipe/id/{recipeId}</code></a></li>
+  <li><a href="#usersGetPersonalRecipesGet"><code><span class="http-method">get</span> /users/getPersonalRecipes</code></a></li>
+  <li><a href="#usersUserInfoFavouritesGet"><code><span class="http-method">get</span> /users/userInfoFavourites</code></a></li>
+  <li><a href="#usersUserInfoLastViewedGet"><code><span class="http-method">get</span> /users/userInfoLastViewed</code></a></li>
+  </ul>
+
+  <h1><a name="Authentication">Authentication</a></h1>
+  <div class="method"><a name="loginPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /login</code></pre></div>
+    <div class="method-summary">Logs in and returns the authentication  cookie (<span class="nickname">loginPost</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#LoginRequest">LoginRequest</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; A JSON object containing the username and password. </div>
+                </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successfully authenticated -the user is in the system. The session ID is returned in a cookie named &lt;code&gt;JSESSIONID&lt;/code&gt;.
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    incorrect username/password
+        <a href="#Error401">Error401</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="registerPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /register</code></pre></div>
+    <div class="method-summary">Sign up, adding new user to the system and return authentication. (<span class="nickname">registerPost</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#user">user</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; A JSON object containing the register parameters. </div>
+                </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successfully registerd, new user is in the system. The session ID returned a authentication  cookie - &lt;code&gt;session&lt;/code&gt;.
+        <a href="#"></a>
+    <h4 class="field-label">409</h4>
+    Username taken
+        <a href="#Error409">Error409</a>
+    <h4 class="field-label">500</h4>
+    Server error
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Recipes">Recipes</a></h1>
+  <div class="method"><a name="reciepesSearchQuerySearchQueryAmountNumGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /reciepes/search/query/{searchQuery}/amount/{num}</code></pre></div>
+    <div class="method-summary">Search a recipe (<span class="nickname">reciepesSearchQuerySearchQueryAmountNumGet</span>)</div>
+    <div class="method-notes">Search recipe by name</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">searchQuery (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The name of recipe to enter the query. </div>      <div class="param">num (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; number of results that will return </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">cousine (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Kind of cousine to search by. </div>      <div class="param">diet (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Kind of diets recipes to search by. </div>      <div class="param">intolerance (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Kind of diets recipes to search by. </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#recipe">recipe</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "id" : 29474,
+  "title" : "pizza",
+  "readyInMinutes" : 30,
+  "aggregateLikes" : 100,
+  "vegetrian" : true,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+}, {
+  "id" : 30154,
+  "title" : "burger",
+  "readyInMinutes" : 45,
+  "aggregateLikes" : 200,
+  "vegetrian" : false,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+}, {
+  "id" : 16424,
+  "title" : "pasta",
+  "readyInMinutes" : 15,
+  "aggregateLikes" : 50,
+  "vegetrian" : true,
+  "vegan" : true,
+  "glutenFree" : false,
+  "image" : "recipe.jpghttps://spoonacular.com/recipeImages/640509-556x370.jpg"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    returns array of recipes according to the number specified
+        
+    <h4 class="field-label">404</h4>
+    No results found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="recipesGetRandomRecipesGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /recipes/getRandomRecipes</code></pre></div>
+    <div class="method-summary">return three random recipes (<span class="nickname">recipesGetRandomRecipesGet</span>)</div>
+    <div class="method-notes">The server return three random recipes.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#recipe">recipe</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "id" : 29474,
+  "title" : "pizza",
+  "readyInMinutes" : 30,
+  "aggregateLikes" : 100,
+  "vegetrian" : true,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+}, {
+  "id" : 30154,
+  "title" : "burger",
+  "readyInMinutes" : 45,
+  "aggregateLikes" : 200,
+  "vegetrian" : false,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+}, {
+  "id" : 16424,
+  "title" : "pasta",
+  "readyInMinutes" : 15,
+  "aggregateLikes" : 50,
+  "vegetrian" : true,
+  "vegan" : true,
+  "glutenFree" : false,
+  "image" : "recipe.jpghttps://spoonacular.com/recipeImages/640509-556x370.jpg"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Get three random recipes maped by key - recipe id and value - object of recipe.
+        
+    <h4 class="field-label">404</h4>
+    No results found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="recipesGetRecipeIdRecipeIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /recipes/getRecipe/id/{recipeId}</code></pre></div>
+    <div class="method-summary">Get full recipe info by id. (<span class="nickname">recipesGetRecipeIdRecipeIdGet</span>)</div>
+    <div class="method-notes">get information about spesific recipe</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">recipeId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The ID of the recipe </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#fullRecipeInfo">fullRecipeInfo</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "readyInMinutes" : 45,
+  "image" : "recipe.jpg",
+  "instructions" : [ {
+    "step_number" : "1",
+    "step" : "Grease a 9\" x 13\" baking pan with 1 tbsp. butter and spread 12 cup of the marinara sauce across the bottom of the pan. Set aside. Bring a 6-qt. pot of salted water to a boil over high heat."
+  }, {
+    "step_number" : "2",
+    "step" : "Add the manicotti and cook until just tender, about 8 minutes."
+  }, {
+    "step_number" : "3",
+    "step" : "Drain manicotti and rinse under cold water; set aside."
+  }, {
+    "step_number" : "4",
+    "step" : "Heat oven to 45"
+  }, {
+    "step_number" : "5",
+    "step" : "Heat remaining butter in a 12\" skillet over medium heat."
+  }, {
+    "step_number" : "6",
+    "step" : "Add garlic and cook, stirring occasionally, until soft, about 5 minutes."
+  }, {
+    "step_number" : "7",
+    "step" : "Transfer garlic to a medium bowl along with the ricotta, 12 cup parmesan, 5 tbsp. chopped parsley, salt, pepper, nutmeg, and eggs and stir to combine.Spoon some of the filling into both openings of each manicotti shell. (Alternatively, transfer the ricotta mixture to a 1-gallon resealable plastic bag, snip off a bottom corner of the bag, and pipe filling into pasta.) Repeat with remaining manicotti shells."
+  }, {
+    "step_number" : "8",
+    "step" : "Transfer stuffed manicotti to prepared baking dish, making 2 rows."
+  }, {
+    "step_number" : "9",
+    "step" : "Spread the remaining marinara sauce over the manicotti and sprinkle with remaining parmesan."
+  }, {
+    "step_number" : "10",
+    "step" : "Bake until hot and bubbly, about 20 minutes. Sprinkle with remaining parsley."
+  }, {
+    "step_number" : "11",
+    "step" : "Let sit for 5 minutes before serving."
+  } ],
+  "glutenFree" : false,
+  "ingredients" : [ {
+    "ingredient_name" : "bell pepper",
+    "amount" : 6,
+    "unit" : "servings"
+  }, {
+    "ingredient_name" : "eggs",
+    "amount" : 2,
+    "unit" : ""
+  }, {
+    "ingredient_name" : "garlic",
+    "amount" : 2,
+    "unit" : "cloves"
+  }, {
+    "ingredient_name" : "marinara sauce",
+    "amount" : 3,
+    "unit" : "cups"
+  }, {
+    "ingredient_name" : "nutmeg",
+    "amount" : 1,
+    "unit" : "tsp"
+  }, {
+    "ingredient_name" : "parmesan",
+    "amount" : 1,
+    "unit" : "cup"
+  }, {
+    "ingredient_name" : "parsley",
+    "amount" : 2,
+    "unit" : "tablespoons"
+  }, {
+    "ingredient_name" : "shells",
+    "amount" : 8,
+    "unit" : "oz"
+  }, {
+    "ingredient_name" : "skim milk ricotta",
+    "amount" : 4,
+    "unit" : "cups"
+  }, {
+    "ingredient_name" : "unsalted butter",
+    "amount" : 3,
+    "unit" : "tablespoons"
+  } ],
+  "id" : 633508,
+  "vegan" : false,
+  "title" : "Baked Cheese Manicotti",
+  "aggregateLikes" : 1,
+  "vegetrian" : false
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#fullRecipeInfo">fullRecipeInfo</a>
+    <h4 class="field-label">404</h4>
+    No results found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Users">Users</a></h1>
+  <div class="method"><a name="usersAddRecipeToFavouritesIdIdPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /users/addRecipeToFavourites/id/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersAddRecipeToFavouritesIdIdPost</span>)</div>
+    <div class="method-notes">add a recipe to user&#x27;s favourites</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200">inline_response_200</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "Message" : "added to favourites"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    recipe added successfully to user&#x27;s favourites
+        <a href="#inline_response_200">inline_response_200</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersAddRecipeToViewedIdIdPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /users/addRecipeToViewed/id/{id}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersAddRecipeToViewedIdIdPost</span>)</div>
+    <div class="method-notes">add a recipe to user&#x27;s viewed history</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_1">inline_response_200_1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "Message" : "added to viewed history"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    recipe added successfully to user&#x27;s viewed history
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersGetFamilyRecipeIdRecipeIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/getFamilyRecipe/id/{recipeId}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersGetFamilyRecipeIdRecipeIdGet</span>)</div>
+    <div class="method-notes">get a family recipe by it&#x27;s id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">recipeId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#fullRecipeInfo">fullRecipeInfo</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "readyInMinutes" : 45,
+  "image" : "recipe.jpg",
+  "instructions" : [ {
+    "step_number" : "1",
+    "step" : "Grease a 9\" x 13\" baking pan with 1 tbsp. butter and spread 12 cup of the marinara sauce across the bottom of the pan. Set aside. Bring a 6-qt. pot of salted water to a boil over high heat."
+  }, {
+    "step_number" : "2",
+    "step" : "Add the manicotti and cook until just tender, about 8 minutes."
+  }, {
+    "step_number" : "3",
+    "step" : "Drain manicotti and rinse under cold water; set aside."
+  }, {
+    "step_number" : "4",
+    "step" : "Heat oven to 45"
+  }, {
+    "step_number" : "5",
+    "step" : "Heat remaining butter in a 12\" skillet over medium heat."
+  }, {
+    "step_number" : "6",
+    "step" : "Add garlic and cook, stirring occasionally, until soft, about 5 minutes."
+  }, {
+    "step_number" : "7",
+    "step" : "Transfer garlic to a medium bowl along with the ricotta, 12 cup parmesan, 5 tbsp. chopped parsley, salt, pepper, nutmeg, and eggs and stir to combine.Spoon some of the filling into both openings of each manicotti shell. (Alternatively, transfer the ricotta mixture to a 1-gallon resealable plastic bag, snip off a bottom corner of the bag, and pipe filling into pasta.) Repeat with remaining manicotti shells."
+  }, {
+    "step_number" : "8",
+    "step" : "Transfer stuffed manicotti to prepared baking dish, making 2 rows."
+  }, {
+    "step_number" : "9",
+    "step" : "Spread the remaining marinara sauce over the manicotti and sprinkle with remaining parmesan."
+  }, {
+    "step_number" : "10",
+    "step" : "Bake until hot and bubbly, about 20 minutes. Sprinkle with remaining parsley."
+  }, {
+    "step_number" : "11",
+    "step" : "Let sit for 5 minutes before serving."
+  } ],
+  "glutenFree" : false,
+  "ingredients" : [ {
+    "ingredient_name" : "bell pepper",
+    "amount" : 6,
+    "unit" : "servings"
+  }, {
+    "ingredient_name" : "eggs",
+    "amount" : 2,
+    "unit" : ""
+  }, {
+    "ingredient_name" : "garlic",
+    "amount" : 2,
+    "unit" : "cloves"
+  }, {
+    "ingredient_name" : "marinara sauce",
+    "amount" : 3,
+    "unit" : "cups"
+  }, {
+    "ingredient_name" : "nutmeg",
+    "amount" : 1,
+    "unit" : "tsp"
+  }, {
+    "ingredient_name" : "parmesan",
+    "amount" : 1,
+    "unit" : "cup"
+  }, {
+    "ingredient_name" : "parsley",
+    "amount" : 2,
+    "unit" : "tablespoons"
+  }, {
+    "ingredient_name" : "shells",
+    "amount" : 8,
+    "unit" : "oz"
+  }, {
+    "ingredient_name" : "skim milk ricotta",
+    "amount" : 4,
+    "unit" : "cups"
+  }, {
+    "ingredient_name" : "unsalted butter",
+    "amount" : 3,
+    "unit" : "tablespoons"
+  } ],
+  "id" : 633508,
+  "vegan" : false,
+  "title" : "Baked Cheese Manicotti",
+  "aggregateLikes" : 1,
+  "vegetrian" : false
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    recipe added successfully to user&#x27;s favourites
+        <a href="#fullRecipeInfo">fullRecipeInfo</a>
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersGetFamilyRecipesGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/getFamilyRecipes</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersGetFamilyRecipesGet</span>)</div>
+    <div class="method-notes">returns all favourites recipes by regiestered user.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#familyPersonalRecipe">familyPersonalRecipe</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "id" : 11,
+  "RecipeOwner" : "galbuz",
+  "Occasion" : [ "Friday dinner" ],
+  "title" : "Lemon Garlic Rice",
+  "readyInMinutes" : 25,
+  "aggregateLikes" : 124,
+  "ingredients" : [ {
+    "name" : "chicken stock",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294555/Instant-Pot-Chicken-Stock-finished-4x5-2_st7rit.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "400",
+        "unit" : "ml"
+      }
+    }
+  }, {
+    "name" : "basmati rice",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294664/basmati_cwj8cu.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "200",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "butter",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "60",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "minced fresh garlic",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "lemon juice",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295977/lemon_juice_r0rgsp.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "black pepper",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  } ],
+  "instructions" : [ {
+    "step" : "1",
+    "instruction" : "Combine stock, rice, butter, garlic, and lemon juice into pot. Bring to a boil over medium heat."
+  }, {
+    "step" : "2",
+    "instruction" : "Cover with lid and reduce heat to medium-low."
+  }, {
+    "step" : "3",
+    "instruction" : "Simmer until stock is absorbed and rice is tender — about 15 minutes."
+  }, {
+    "step" : "4",
+    "instruction" : "Turn off heat. Add pepper. Sprinkle with parsley, if using, and stir well."
+  } ],
+  "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296675/result_temkgf.jpg",
+  "servings" : 4,
+  "vegan" : true,
+  "vegetarian" : true,
+  "glutenFree" : false
+}, {
+  "id" : 22,
+  "RecipeOwner" : "galbuz",
+  "Occasion" : [ "Lunch" ],
+  "title" : "Baked Chipotle Chicken Thighs",
+  "readyInMinutes" : 40,
+  "aggregateLikes" : 100,
+  "ingredients" : [ {
+    "name" : "bone-in, skin-on chicken thighs",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297662/thighs_l558qs.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "1",
+        "unit" : "kg"
+      }
+    }
+  }, {
+    "name" : "canned chipotle peppers in adobo sauce",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297840/canned_chipotle_peppers_in_adobo_sauce_hghzgj.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "800",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "adobo sauce",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "minced fresh garlic",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      },
+      "us" : {
+        "value" : "1",
+        "unit" : "tablespoon"
+      }
+    }
+  }, {
+    "name" : "onion powder",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298034/onion_powder_bt9sir.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "chili powder",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298087/chili_powder_xvkpdx.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "26",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "dried oregano",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298214/dried_oregano_z2xxqo.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "salt",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298289/salt_x9gq6s.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "7",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "black pepper",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "7",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "olive oil",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298498/olive_oil_vvpb44.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "40",
+        "unit" : "ml"
+      }
+    }
+  } ],
+  "instructions" : [ {
+    "step" : "1",
+    "instruction" : "Dice chipotle peppers and add to bowl along with adobo sauce."
+  }, {
+    "step" : "2",
+    "instruction" : "Add remaining MARINADE ingredients. Mix well in bowl, or pulse in food processor, until combined."
+  }, {
+    "step" : "3",
+    "instruction" : "Place chicken and marinade into bag and seal, making sure chicken is well coated. Let marinate in refrigerator at least three hours, flipping the bag over at least once."
+  }, {
+    "step" : "4",
+    "instruction" : "Set oven to 400 degrees Fahrenheit. Transfer marinated chicken and marinade to baking dish.  Bake until chicken has an internal temperature of 165 degrees and is fork tender–about 30 minutes."
+  } ],
+  "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298680/Baked_Chipotle_Chicken_Thighs_qarcw1.jpg",
+  "servings" : 4,
+  "vegan" : false,
+  "vegetarian" : false,
+  "glutenFree" : false
+}, {
+  "id" : 33,
+  "RecipeOwner" : "galbuz",
+  "Occasion" : [ "Breakfast" ],
+  "title" : "Tomato Avocado Toast with Eggs",
+  "readyInMinutes" : 5,
+  "aggregateLikes" : 84,
+  "ingredients" : [ {
+    "name" : "slices whole wheat bread, toasted",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299156/slices_whole_wheat_bread_toasted_pl3lm9.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "200",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "avocado",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299467/avocado_kxqgi2.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "200",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "egg",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299598/2_eggs_vyxuwm.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "100",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "tomato",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299712/Tomato_yvzjwr.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "85",
+        "unit" : "gr"
+      }
+    }
+  } ],
+  "instructions" : [ {
+    "step" : "1",
+    "instruction" : "Place a slice of toast on each plate."
+  }, {
+    "step" : "2",
+    "instruction" : "Melt butter in skillet over medium heat. Meanwhile, place avocado in mixing bowl and mash thoroughly. Set bowl aside."
+  }, {
+    "step" : "3",
+    "instruction" : "Carefully crack an egg into melted butter on one side of skillet. Repeat with second egg on opposite side of skillet. Let eggs cook until whites are nearly set – about 2 minutes. Meanwhile, spread mashed avocado across both pieces of toast."
+  }, {
+    "step" : "4",
+    "instruction" : "Flip eggs and let cook until over medium – about 1 minute. Meanwhile, slice tomato, then distribute slices to lay across each piece of avocado toast."
+  }, {
+    "step" : "5",
+    "instruction" : " Top each piece of tomato avocado toast with fried egg."
+  } ],
+  "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299825/tomato-avocado-toast-with-eggs1_zzgbdq.jpg",
+  "servings" : 2,
+  "vegan" : true,
+  "vegetarian" : false,
+  "glutenFree" : false
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    favourites recipes returned to user.
+        
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersGetLastThreeViewedRecipesGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/getLastThreeViewedRecipes</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersGetLastThreeViewedRecipesGet</span>)</div>
+    <div class="method-notes">returns 3 recipes viewed recently by regiestered user.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#recipe">recipe</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "id" : 29474,
+  "title" : "pizza",
+  "readyInMinutes" : 30,
+  "aggregateLikes" : 100,
+  "vegetrian" : true,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+}, {
+  "id" : 30154,
+  "title" : "burger",
+  "readyInMinutes" : 45,
+  "aggregateLikes" : 200,
+  "vegetrian" : false,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+}, {
+  "id" : 16424,
+  "title" : "pasta",
+  "readyInMinutes" : 15,
+  "aggregateLikes" : 50,
+  "vegetrian" : true,
+  "vegan" : true,
+  "glutenFree" : false,
+  "image" : "recipe.jpghttps://spoonacular.com/recipeImages/640509-556x370.jpg"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    3 last viewed recipes returned to user.
+        
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersGetMyFavouritesGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/getMyFavourites</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersGetMyFavouritesGet</span>)</div>
+    <div class="method-notes">returns all favourites recipes by regiestered user.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#recipe">recipe</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "id" : 29474,
+  "title" : "pizza",
+  "readyInMinutes" : 30,
+  "aggregateLikes" : 100,
+  "vegetrian" : true,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+}, {
+  "id" : 30154,
+  "title" : "burger",
+  "readyInMinutes" : 45,
+  "aggregateLikes" : 200,
+  "vegetrian" : false,
+  "vegan" : false,
+  "glutenFree" : false,
+  "image" : "https://spoonacular.com/recipeImages/640509-556x370.jpg"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    favourites recipes returned to user.
+        
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersGetPersonalRecipeIdRecipeIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/getPersonalRecipe/id/{recipeId}</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersGetPersonalRecipeIdRecipeIdGet</span>)</div>
+    <div class="method-notes">get a personal recipe by it&#x27;s id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">recipeId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#fullRecipeInfo">fullRecipeInfo</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "readyInMinutes" : 45,
+  "image" : "recipe.jpg",
+  "instructions" : [ {
+    "step_number" : "1",
+    "step" : "Grease a 9\" x 13\" baking pan with 1 tbsp. butter and spread 12 cup of the marinara sauce across the bottom of the pan. Set aside. Bring a 6-qt. pot of salted water to a boil over high heat."
+  }, {
+    "step_number" : "2",
+    "step" : "Add the manicotti and cook until just tender, about 8 minutes."
+  }, {
+    "step_number" : "3",
+    "step" : "Drain manicotti and rinse under cold water; set aside."
+  }, {
+    "step_number" : "4",
+    "step" : "Heat oven to 45"
+  }, {
+    "step_number" : "5",
+    "step" : "Heat remaining butter in a 12\" skillet over medium heat."
+  }, {
+    "step_number" : "6",
+    "step" : "Add garlic and cook, stirring occasionally, until soft, about 5 minutes."
+  }, {
+    "step_number" : "7",
+    "step" : "Transfer garlic to a medium bowl along with the ricotta, 12 cup parmesan, 5 tbsp. chopped parsley, salt, pepper, nutmeg, and eggs and stir to combine.Spoon some of the filling into both openings of each manicotti shell. (Alternatively, transfer the ricotta mixture to a 1-gallon resealable plastic bag, snip off a bottom corner of the bag, and pipe filling into pasta.) Repeat with remaining manicotti shells."
+  }, {
+    "step_number" : "8",
+    "step" : "Transfer stuffed manicotti to prepared baking dish, making 2 rows."
+  }, {
+    "step_number" : "9",
+    "step" : "Spread the remaining marinara sauce over the manicotti and sprinkle with remaining parmesan."
+  }, {
+    "step_number" : "10",
+    "step" : "Bake until hot and bubbly, about 20 minutes. Sprinkle with remaining parsley."
+  }, {
+    "step_number" : "11",
+    "step" : "Let sit for 5 minutes before serving."
+  } ],
+  "glutenFree" : false,
+  "ingredients" : [ {
+    "ingredient_name" : "bell pepper",
+    "amount" : 6,
+    "unit" : "servings"
+  }, {
+    "ingredient_name" : "eggs",
+    "amount" : 2,
+    "unit" : ""
+  }, {
+    "ingredient_name" : "garlic",
+    "amount" : 2,
+    "unit" : "cloves"
+  }, {
+    "ingredient_name" : "marinara sauce",
+    "amount" : 3,
+    "unit" : "cups"
+  }, {
+    "ingredient_name" : "nutmeg",
+    "amount" : 1,
+    "unit" : "tsp"
+  }, {
+    "ingredient_name" : "parmesan",
+    "amount" : 1,
+    "unit" : "cup"
+  }, {
+    "ingredient_name" : "parsley",
+    "amount" : 2,
+    "unit" : "tablespoons"
+  }, {
+    "ingredient_name" : "shells",
+    "amount" : 8,
+    "unit" : "oz"
+  }, {
+    "ingredient_name" : "skim milk ricotta",
+    "amount" : 4,
+    "unit" : "cups"
+  }, {
+    "ingredient_name" : "unsalted butter",
+    "amount" : 3,
+    "unit" : "tablespoons"
+  } ],
+  "id" : 633508,
+  "vegan" : false,
+  "title" : "Baked Cheese Manicotti",
+  "aggregateLikes" : 1,
+  "vegetrian" : false
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    recipe added successfully to user&#x27;s favourites
+        <a href="#fullRecipeInfo">fullRecipeInfo</a>
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersGetPersonalRecipesGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/getPersonalRecipes</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersGetPersonalRecipesGet</span>)</div>
+    <div class="method-notes">returns all personal recipes by regiestered user.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#familyPersonalRecipe">familyPersonalRecipe</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "id" : 11,
+  "RecipeOwner" : "galbuz",
+  "Occasion" : [ "Friday dinner" ],
+  "title" : "Lemon Garlic Rice",
+  "readyInMinutes" : 25,
+  "aggregateLikes" : 124,
+  "ingredients" : [ {
+    "name" : "chicken stock",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294555/Instant-Pot-Chicken-Stock-finished-4x5-2_st7rit.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "400",
+        "unit" : "ml"
+      }
+    }
+  }, {
+    "name" : "basmati rice",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591294664/basmati_cwj8cu.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "200",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "butter",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "60",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "minced fresh garlic",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "lemon juice",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295977/lemon_juice_r0rgsp.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "black pepper",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  } ],
+  "instructions" : [ {
+    "step" : "1",
+    "instruction" : "Combine stock, rice, butter, garlic, and lemon juice into pot. Bring to a boil over medium heat."
+  }, {
+    "step" : "2",
+    "instruction" : "Cover with lid and reduce heat to medium-low."
+  }, {
+    "step" : "3",
+    "instruction" : "Simmer until stock is absorbed and rice is tender — about 15 minutes."
+  }, {
+    "step" : "4",
+    "instruction" : "Turn off heat. Add pepper. Sprinkle with parsley, if using, and stir well."
+  } ],
+  "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296675/result_temkgf.jpg",
+  "servings" : 4,
+  "vegan" : true,
+  "vegetarian" : true,
+  "glutenFree" : false
+}, {
+  "id" : 22,
+  "RecipeOwner" : "galbuz",
+  "Occasion" : [ "Lunch" ],
+  "title" : "Baked Chipotle Chicken Thighs",
+  "readyInMinutes" : 40,
+  "aggregateLikes" : 100,
+  "ingredients" : [ {
+    "name" : "bone-in, skin-on chicken thighs",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297662/thighs_l558qs.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "1",
+        "unit" : "kg"
+      }
+    }
+  }, {
+    "name" : "canned chipotle peppers in adobo sauce",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591297840/canned_chipotle_peppers_in_adobo_sauce_hghzgj.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "800",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "adobo sauce",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295611/butter_ou2zx9.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "minced fresh garlic",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591295672/minced_garlic_wjndgh.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      },
+      "us" : {
+        "value" : "1",
+        "unit" : "tablespoon"
+      }
+    }
+  }, {
+    "name" : "onion powder",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298034/onion_powder_bt9sir.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "chili powder",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298087/chili_powder_xvkpdx.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "26",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "dried oregano",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298214/dried_oregano_z2xxqo.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "13",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "salt",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298289/salt_x9gq6s.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "7",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "black pepper",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296142/black_pepper_otlw5a.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "7",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "olive oil",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298498/olive_oil_vvpb44.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "40",
+        "unit" : "ml"
+      }
+    }
+  } ],
+  "instructions" : [ {
+    "step" : "1",
+    "instruction" : "Dice chipotle peppers and add to bowl along with adobo sauce."
+  }, {
+    "step" : "2",
+    "instruction" : "Add remaining MARINADE ingredients. Mix well in bowl, or pulse in food processor, until combined."
+  }, {
+    "step" : "3",
+    "instruction" : "Place chicken and marinade into bag and seal, making sure chicken is well coated. Let marinate in refrigerator at least three hours, flipping the bag over at least once."
+  }, {
+    "step" : "4",
+    "instruction" : "Set oven to 400 degrees Fahrenheit. Transfer marinated chicken and marinade to baking dish.  Bake until chicken has an internal temperature of 165 degrees and is fork tender–about 30 minutes."
+  } ],
+  "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591298680/Baked_Chipotle_Chicken_Thighs_qarcw1.jpg",
+  "servings" : 4,
+  "vegan" : false,
+  "vegetarian" : false,
+  "glutenFree" : false
+}, {
+  "id" : 33,
+  "RecipeOwner" : "galbuz",
+  "Occasion" : [ "Breakfast" ],
+  "title" : "Tomato Avocado Toast with Eggs",
+  "readyInMinutes" : 5,
+  "aggregateLikes" : 84,
+  "ingredients" : [ {
+    "name" : "slices whole wheat bread, toasted",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299156/slices_whole_wheat_bread_toasted_pl3lm9.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "200",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "avocado",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299467/avocado_kxqgi2.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "200",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "egg",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299598/2_eggs_vyxuwm.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "100",
+        "unit" : "gr"
+      }
+    }
+  }, {
+    "name" : "tomato",
+    "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299712/Tomato_yvzjwr.jpg",
+    "amount" : {
+      "metric" : {
+        "value" : "85",
+        "unit" : "gr"
+      }
+    }
+  } ],
+  "instructions" : [ {
+    "step" : "1",
+    "instruction" : "Place a slice of toast on each plate."
+  }, {
+    "step" : "2",
+    "instruction" : "Melt butter in skillet over medium heat. Meanwhile, place avocado in mixing bowl and mash thoroughly. Set bowl aside."
+  }, {
+    "step" : "3",
+    "instruction" : "Carefully crack an egg into melted butter on one side of skillet. Repeat with second egg on opposite side of skillet. Let eggs cook until whites are nearly set – about 2 minutes. Meanwhile, spread mashed avocado across both pieces of toast."
+  }, {
+    "step" : "4",
+    "instruction" : "Flip eggs and let cook until over medium – about 1 minute. Meanwhile, slice tomato, then distribute slices to lay across each piece of avocado toast."
+  }, {
+    "step" : "5",
+    "instruction" : " Top each piece of tomato avocado toast with fried egg."
+  } ],
+  "image" : "https://res.cloudinary.com/dc5voqqvz/image/upload/v1591299825/tomato-avocado-toast-with-eggs1_zzgbdq.jpg",
+  "servings" : 2,
+  "vegan" : true,
+  "vegetarian" : false,
+  "glutenFree" : false
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    personal recipes returned to user.
+        
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserInfoFavouritesGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/userInfoFavourites</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersUserInfoFavouritesGet</span>)</div>
+    <div class="method-notes">returns all recipe&#x27;s ids which are favourites of regiestered user.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#inline_response_200_2">inline_response_200_2</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "recipe_id" : 0
+}, {
+  "recipe_id" : 0
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    all ids of favourites recipes by user.
+        
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="usersUserInfoLastViewedGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/userInfoLastViewed</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">usersUserInfoLastViewedGet</span>)</div>
+    <div class="method-notes">returns all recipe&#x27;s ids that viewed recently by regiestered user.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#inline_response_200_2">inline_response_200_2</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "recipe_id" : 0
+}, {
+  "recipe_id" : 0
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    all ids of last viewed recipes by user.
+        
+    <h4 class="field-label">404</h4>
+    not found
+        <a href="#Error404">Error404</a>
+    <h4 class="field-label">500</h4>
+    Server error occured
+        <a href="#Error500">Error500</a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#Cousines"><code>Cousines</code></a></li>
+    <li><a href="#Diets"><code>Diets</code></a></li>
+    <li><a href="#Error401"><code>Error401</code></a></li>
+    <li><a href="#Error404"><code>Error404</code></a></li>
+    <li><a href="#Error409"><code>Error409</code></a></li>
+    <li><a href="#Error500"><code>Error500</code></a></li>
+    <li><a href="#Intolerances"><code>Intolerances</code></a></li>
+    <li><a href="#LoginRequest"><code>LoginRequest</code></a></li>
+    <li><a href="#familyPersonalRecipe"><code>familyPersonalRecipe</code></a></li>
+    <li><a href="#fullRecipeInfo"><code>fullRecipeInfo</code></a></li>
+    <li><a href="#ingredientsFamilyPersonal"><code>ingredientsFamilyPersonal</code></a></li>
+    <li><a href="#ingredientsFamilyPersonal_inner"><code>ingredientsFamilyPersonal_inner</code></a></li>
+    <li><a href="#inline_response_200"><code>inline_response_200</code></a></li>
+    <li><a href="#inline_response_200_1"><code>inline_response_200_1</code></a></li>
+    <li><a href="#inline_response_200_2"><code>inline_response_200_2</code></a></li>
+    <li><a href="#recipe"><code>recipe</code></a></li>
+    <li><a href="#recipeIngredients"><code>recipeIngredients</code></a></li>
+    <li><a href="#recipeStepsInstructions"><code>recipeStepsInstructions</code></a></li>
+    <li><a href="#user"><code>user</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Cousines"><code>Cousines</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Diets"><code>Diets</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Error401"><code>Error401</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">Msg (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: incorrect input</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Error404"><code>Error404</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">Msg (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Page not found</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Error409"><code>Error409</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">Msg (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Username taken, pick another</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Error500"><code>Error500</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">Msg (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Server error</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Intolerances"><code>Intolerances</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="LoginRequest"><code>LoginRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">username (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Contain only letters </div>
+          <div class="param-desc"><span class="param-type">example: gakbuz21</span></div>
+<div class="param">password (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Contains letters with at least 1 numerical character and 1 special characters. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="familyPersonalRecipe"><code>familyPersonalRecipe</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> recipe&#x27;s id </div>
+<div class="param">RecipeOwner (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> who invented the recipe </div>
+          <div class="param-desc"><span class="param-type">example: gal</span></div>
+<div class="param">Occasion (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span> when we make the recipe </div>
+          <div class="param-desc"><span class="param-type">example: [&quot;friday dinner&quot;,&quot;holidays&quot;]</span></div>
+<div class="param">title (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> name of recipe </div>
+          <div class="param-desc"><span class="param-type">example: pizza</span></div>
+<div class="param">readyInMinutes (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> the recipe time duration </div>
+          <div class="param-desc"><span class="param-type">example: 30</span></div>
+<div class="param">aggregateLikes (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 142</span></div>
+<div class="param">ingredients (optional)</div><div class="param-desc"><span class="param-type"><a href="#ingredientsFamilyPersonal">ingredientsFamilyPersonal</a></span>  </div>
+<div class="param">instructions (optional)</div><div class="param-desc"><span class="param-type"><a href="#recipeStepsInstructions">recipeStepsInstructions</a></span>  </div>
+<div class="param">image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> the recipe image url </div>
+          <div class="param-desc"><span class="param-type">example: https://res.cloudinary.com/dc5voqqvz/image/upload/v1591296675/result_temkgf.jpg</span></div>
+<div class="param">servings (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 4</span></div>
+<div class="param">vegetrian (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: true</span></div>
+<div class="param">vegan (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+<div class="param">glutenFree (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="fullRecipeInfo"><code>fullRecipeInfo</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> The recipe identifier, returned for futher processing and actions on recipes. </div>
+          <div class="param-desc"><span class="param-type">example: 633508</span></div>
+<div class="param">title (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Baked Cheese Manicotti</span></div>
+<div class="param">readyInMinutes (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> the recipe time duration </div>
+          <div class="param-desc"><span class="param-type">example: 45</span></div>
+<div class="param">aggregateLikes (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">vegetrian (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+<div class="param">vegan (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+<div class="param">glutenFree (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+<div class="param">image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> the recipe image url </div>
+          <div class="param-desc"><span class="param-type">example: recipe.jpg</span></div>
+<div class="param">ingredients (optional)</div><div class="param-desc"><span class="param-type"><a href="#recipeIngredients">recipeIngredients</a></span>  </div>
+<div class="param">instructions (optional)</div><div class="param-desc"><span class="param-type"><a href="#recipeStepsInstructions">recipeStepsInstructions</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ingredientsFamilyPersonal"><code>ingredientsFamilyPersonal</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ingredientsFamilyPersonal_inner"><code>ingredientsFamilyPersonal_inner</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#object">Object</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200"><code>inline_response_200</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">Message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: added to favourites</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_1"><code>inline_response_200_1</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">Message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: added to viewed history</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_2"><code>inline_response_200_2</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">recipe_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> The recipe identifier, returned for futher processing and actions on recipes. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="recipe"><code>recipe</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> The recipe identifier, returned for futher processing and actions on recipes. </div>
+          <div class="param-desc"><span class="param-type">example: 29</span></div>
+<div class="param">title (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: pizza</span></div>
+<div class="param">readyInMinutes (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> the recipe time duration </div>
+          <div class="param-desc"><span class="param-type">example: 30</span></div>
+<div class="param">aggregateLikes (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 100</span></div>
+<div class="param">vegetrian (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: true</span></div>
+<div class="param">vegan (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+<div class="param">glutenFree (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+<div class="param">image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> the recipe image url </div>
+          <div class="param-desc"><span class="param-type">example: recipe.jpg</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="recipeIngredients"><code>recipeIngredients</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="recipeStepsInstructions"><code>recipeStepsInstructions</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="user"><code>user</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">userName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: galBuz</span></div>
+<div class="param">firstName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Gal</span></div>
+<div class="param">lastName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Buzaglo</span></div>
+<div class="param">country (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Israel</span></div>
+<div class="param">password (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1234</span></div>
+<div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: galbuz@gmail.com</span></div>
+<div class="param">urlProfilePicture (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: https://res.cloudinary.com/do7qaduwg/image/upload/v1589535868/samples/people/smiling-man.jpg</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
