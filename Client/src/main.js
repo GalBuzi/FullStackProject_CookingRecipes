@@ -98,7 +98,6 @@ const shared_data = {
     localStorage.removeItem("username");
     localStorage.removeItem("viewed_recipes");
     localStorage.removeItem("favourites_recipes");
-
     this.username = undefined;
   },
   addViewedRecipes(viewed_recipes) {
