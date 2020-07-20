@@ -72,26 +72,12 @@
       <p
         style="color:black; font-size:0.65cm; font-family: 'Comic Sans MS', cursive, sans-serif;"
       >
-        <u>You can watch our previous projects in Github:</u>
+        <u>You can watch our project in Github:</u>
         <br />
-        Assignment 3.1:
         <a
-          href="https://github.com/SISE-Web-Development-Environments/assignment3-1-shay_gal-assignment3-1"
-          >Link to assignment 3.1 - API</a
+          href="https://github.com/SISE-Web-Development-Environments/assignment-3-3-203886528_203276258"
+          >Client & Server</a
         >
-        <br />
-        Assignment 3.2:
-        <a
-          href="https://github.com/SISE-Web-Development-Environments/assignment-3-2-shay_gal-assignment3-1"
-          >Link to assignment 3.2 - Server side</a
-        >
-        <br />
-        Assignment 3.3:
-        <a
-          href="https://github.com/SISE-Web-Development-Environments/assignment-3-3-shay_gal"
-          >Link to assignment 3.3 - Client side</a
-        >
-        <br />
       </p>
     </div>
   </div>

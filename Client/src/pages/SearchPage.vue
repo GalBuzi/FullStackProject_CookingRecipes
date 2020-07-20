@@ -154,11 +154,10 @@ export default {
     console.log("1111111");
     console.log(history_storage);
 
-    // if (history_storage.length == 0) {
-    //   console.log("222222222");
-    //   this.$root.store.addSearchedRecipes(new Array());
-    // } else
-    if (this.$root.store.username) {
+    if (!history_storage) {
+      console.log("222222222");
+      this.$root.store.addSearchedRecipes(new Array());
+    } else if (this.$root.store.username) {
       console.log("3333333333");
       console.log(history_storage);
       let username = this.$root.store.username;
