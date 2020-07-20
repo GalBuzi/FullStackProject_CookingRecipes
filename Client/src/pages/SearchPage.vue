@@ -204,7 +204,7 @@ export default {
         if (response.data.length === 0) {
           // console.log("no results");
           this.showModal();
-          this.currentSearchQuery = "";
+          // this.currentSearchQuery = "";
           return;
         }
 
