@@ -1,6 +1,6 @@
 export default [
   "Afghanistan",
-  "ֳ…land Islands",
+  "ֳland Islands",
   "Albania",
   "Algeria",
   "American Samoa",
