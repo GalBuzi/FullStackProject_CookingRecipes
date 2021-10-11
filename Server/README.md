@@ -1,4 +1,4 @@
-Assignment3.2 - Gal Buzaglo 203886528 & Shay Eretz Kdosha 203276258
+Assignment3.2 - Gal Buzaglo  & Shay Eretz Kdosha 
 
 users in DB:
 
